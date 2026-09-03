@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -13,37 +13,42 @@ type MenuType = "main" | "others";
 
 type OpenSubmenu = { type: MenuType; index: number } | null;
 
+/** Tìm submenu chứa route hiện tại — derive thuần, không effect state. */
+function findActiveSubmenu(pathname: string, isActive: (path: string) => boolean): OpenSubmenu {
+  let matched: OpenSubmenu = null;
+  (["main", "others"] as const).forEach((menuType) => {
+    const items = menuType === "main" ? mainNavItems : othersNavItems;
+    items.forEach((nav, index) => {
+      nav.subItems?.forEach((subItem) => {
+        if (isActive(subItem.path)) {
+          matched = { type: menuType, index };
+        }
+      });
+    });
+  });
+  return matched;
+}
+
 const AppSidebar: React.FC = () => {
   const { isExpanded, isMobileOpen, isHovered, setIsHovered } = useSidebar();
   const pathname = usePathname();
-  const [openSubmenu, setOpenSubmenu] = useState<OpenSubmenu>(null);
+  const [manualSubmenu, setManualSubmenu] = useState<OpenSubmenu>(null);
   const [subMenuHeight, setSubMenuHeight] = useState<Record<string, number>>({});
   const subMenuRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
   const isActive = useCallback((path: string) => path === pathname, [pathname]);
 
-  // Mở submenu chứa route hiện tại; đóng nếu route không thuộc submenu nào.
-  useEffect(() => {
-    let submenuMatched = false;
-    (["main", "others"] as const).forEach((menuType) => {
-      const items = menuType === "main" ? mainNavItems : othersNavItems;
-      items.forEach((nav, index) => {
-        nav.subItems?.forEach((subItem) => {
-          if (isActive(subItem.path)) {
-            setOpenSubmenu({ type: menuType, index });
-            submenuMatched = true;
-          }
-        });
-      });
-    });
-    if (!submenuMatched) {
-      setOpenSubmenu(null);
-    }
-  }, [pathname, isActive]);
+  // Submenu mở = override tạm của user, ngược lại derive từ pathname.
+  const openSubmenu: OpenSubmenu = useMemo(
+    () => manualSubmenu ?? findActiveSubmenu(pathname, isActive),
+    [manualSubmenu, pathname, isActive]
+  );
 
   // Đo chiều cao submenu khi mở để animate height.
+  const openSubmenuRef = useRef<OpenSubmenu>(openSubmenu);
   useEffect(() => {
     if (openSubmenu === null) return;
+    openSubmenuRef.current = openSubmenu;
     const key = `${openSubmenu.type}-${openSubmenu.index}`;
     const el = subMenuRefs.current[key];
     if (el) {
@@ -52,7 +57,7 @@ const AppSidebar: React.FC = () => {
   }, [openSubmenu]);
 
   const handleSubmenuToggle = (index: number, menuType: MenuType) => {
-    setOpenSubmenu((prev) =>
+    setManualSubmenu((prev) =>
       prev && prev.type === menuType && prev.index === index
         ? null
         : { type: menuType, index }
