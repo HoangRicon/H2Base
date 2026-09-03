@@ -11,7 +11,6 @@ export default function FormInModal() {
   const { isOpen, openModal, closeModal } = useModal();
   const handleSave = () => {
     // Handle save logic here
-    console.log("Saving changes...");
     closeModal();
   };
   return (
@@ -19,11 +18,7 @@ export default function FormInModal() {
       <Button size="sm" onClick={openModal}>
         Open Modal
       </Button>
-      <Modal
-        isOpen={isOpen}
-        onClose={closeModal}
-        className="max-w-[584px] p-5 lg:p-10"
-      >
+      <Modal isOpen={isOpen} onClose={closeModal} className="max-w-[584px] p-5 lg:p-10">
         <form className="">
           <h4 className="mb-6 text-lg font-medium text-gray-800 dark:text-white/90">
             Personal Information
@@ -56,7 +51,7 @@ export default function FormInModal() {
             </div>
           </div>
 
-          <div className="flex items-center justify-end w-full gap-3 mt-6">
+          <div className="mt-6 flex w-full items-center justify-end gap-3">
             <Button size="sm" variant="outline" onClick={closeModal}>
               Close
             </Button>

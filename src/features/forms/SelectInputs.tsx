@@ -15,9 +15,7 @@ export default function SelectInputs() {
 
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
 
-  const handleSelectChange = (value: string) => {
-    console.log("Selected value:", value);
-  };
+  const handleSelectChange = (_value: string) => {};
 
   const multiOptions = [
     { value: "1", text: "Option 1", selected: false },
@@ -32,17 +30,17 @@ export default function SelectInputs() {
       <div className="space-y-6">
         <div>
           <Label>Select Input</Label>
-         <div className="relative">
-           <Select
-            options={options}
-            placeholder="Select Option"
-            onChange={handleSelectChange}
-            className="dark:bg-dark-900"
-          />
-          <span className="absolute text-gray-500 -translate-y-1/2 pointer-events-none right-3 top-1/2 dark:text-gray-400">
-              <ChevronDownIcon/>
+          <div className="relative">
+            <Select
+              options={options}
+              placeholder="Select Option"
+              onChange={handleSelectChange}
+              className="dark:bg-dark-900"
+            />
+            <span className="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-gray-500 dark:text-gray-400">
+              <ChevronDownIcon />
             </span>
-         </div>
+          </div>
         </div>
         <div className="relative">
           <MultiSelect
@@ -51,9 +49,7 @@ export default function SelectInputs() {
             defaultSelected={["1", "3"]}
             onChange={(values) => setSelectedValues(values)}
           />
-          <p className="sr-only">
-            Selected Values: {selectedValues.join(", ")}
-          </p>
+          <p className="sr-only">Selected Values: {selectedValues.join(", ")}</p>
         </div>
       </div>
     </ComponentCard>

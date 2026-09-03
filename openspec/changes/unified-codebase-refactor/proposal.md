@@ -9,6 +9,7 @@ Cần **một code base chuẩn duy nhất** để mọi dự án webapp quản 
 ## What Changes
 
 ### In scope
+
 1. **Tổ chức lại cấu trúc thư mục** theo chuẩn feature-based để một code base phục vụ mọi webapp quản lý: tách rõ UI dùng chung / trang demo mẫu / hạ tầng app (layout, context, hooks) / data layer.
 2. **Bộ rule clean code** cho toàn code base: naming, giới hạn độ phức tạp, cấm giá trị magic, cấm dependency vòng, style được Prettier + ESLint ép buộc ở CI — kèm tài liệu rule ngắn gọn để AI và con người cùng theo.
 3. **Chuẩn hóa data layer fullstack**: một nơi duy nhất cho types, API clients, server actions, business services, validation (zod) — để mọi dự án chỉ cần "cắm" domain của mình vào.
@@ -16,6 +17,7 @@ Cần **một code base chuẩn duy nhất** để mọi dự án webapp quản 
 5. **Dọn template**: bỏ config trùng lặp, gom các components phân tán về đúng chỗ theo domain.
 
 ### Out of scope
+
 - Không thay đổi giao diện/nội dung hiển thị của các trang demo (không redesign UI).
 - Không thêm stack backend ngoài Next.js (không cài Prisma/DB ở bước này — chỉ dựng khung đặt chỗ).
 - Không thêm auth/authorization thật, i18n, hay test e2e — các change riêng sau.
@@ -23,13 +25,13 @@ Cần **một code base chuẩn duy nhất** để mọi dự án webapp quản 
 
 ## Impact
 
-| Đối tượng | Ảnh hưởng |
-|---|---|
-| Cấu trúc thư mục | Thay đổi lớn — mọi import path sẽ cập nhật theo `@/` alias mới |
-| Trang demo | Vẫn chạy được như cũ sau refactor (yêu cầu tương thích) |
-| Nhà phát triển mới | Bắt đầu dự án quản lý mới bằng 1 lệnh, không tự dọn template |
-| AI agent | Theo bộ rule clean code + cấu trúc chuẩn khi sinh code |
-| CI | Thêm lint + format check bắt buộc |
+| Đối tượng          | Ảnh hưởng                                                      |
+| ------------------ | -------------------------------------------------------------- |
+| Cấu trúc thư mục   | Thay đổi lớn — mọi import path sẽ cập nhật theo `@/` alias mới |
+| Trang demo         | Vẫn chạy được như cũ sau refactor (yêu cầu tương thích)        |
+| Nhà phát triển mới | Bắt đầu dự án quản lý mới bằng 1 lệnh, không tự dọn template   |
+| AI agent           | Theo bộ rule clean code + cấu trúc chuẩn khi sinh code         |
+| CI                 | Thêm lint + format check bắt buộc                              |
 
 ## Rollback Plan
 

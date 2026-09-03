@@ -1,208 +1,91 @@
-# TailAdmin Next.js - Free Next.js Tailwind Admin Dashboard Template
+# H2Base — Code base chuẩn cho webapp quản lý (Next.js Fullstack)
 
-TailAdmin is a free and open-source admin dashboard template built on **Next.js and Tailwind CSS** providing developers with everything they need to create a feature-rich and data-driven: back-end, dashboard, or admin panel solution for any sort of web project.
+H2Base là code base dùng chung để khởi động **mọi dự án webapp quản trị** — Quản lý bán hàng, kho, CRM, HRM, phòng khám, trường học... — trong vài phút. Khởi nguồn từ TailAdmin (Next.js + Tailwind) đã được refactor theo feature-based, có data layer fullstack sẵn khung và bộ rule clean code được tooling ép buộc.
 
-![TailAdmin - Next.js Dashboard Preview](./banner.png)
+Stack: **Next.js 16 (App Router) · React 19 · TypeScript strict · Tailwind CSS v4 · Zod · ESLint 9 + Prettier**
 
-With TailAdmin Next.js, you get access to all the necessary dashboard UI components, elements, and pages required to build a high-quality and complete dashboard or admin panel. Whether you're building a dashboard or admin panel for a complex web application or a simple website.
-
-TailAdmin utilizes the powerful features of **Next.js 16** and common features of Next.js such as server-side rendering (SSR), static site generation (SSG), and seamless API route integration. Combined with the advancements of **React 19** and the robustness of **TypeScript**, TailAdmin is the perfect solution to help get your project up and running quickly.
-
-## Overview
-
-TailAdmin provides essential UI components and layouts for building feature-rich, data-driven admin dashboards and control panels. It's built on:
-
-* Next.js 16.x
-* React 19
-* TypeScript
-* Tailwind CSS V4
-
-### Quick Links
-
-* [✨ Visit Website](https://tailadmin.com)
-* [📄 Documentation](https://tailadmin.com/docs)
-* [⬇️ Download](https://tailadmin.com/download)
-* [🖌️ Figma Design File (Community Edition)](https://www.figma.com/community/file/1463141366275764364)
-* [⚡ Get PRO Version](https://tailadmin.com/pricing)
-
-### Demos
-
-* [Free Version](https://nextjs-free-demo.tailadmin.com)
-* [Pro Version](https://nextjs-demo.tailadmin.com)
-
-### Other Versions
-
-- [Next.js Version](https://github.com/TailAdmin/free-nextjs-admin-dashboard)
-- [React.js Version](https://github.com/TailAdmin/free-react-tailwind-admin-dashboard)
-- [Vue.js Version](https://github.com/TailAdmin/vue-tailwind-admin-dashboard)
-- [Angular Version](https://github.com/TailAdmin/free-angular-tailwind-dashboard)
-- [Laravel Version](https://github.com/TailAdmin/tailadmin-laravel)
-
-## Installation
-
-### Prerequisites
-
-To get started with TailAdmin, ensure you have the following prerequisites installed and set up:
-
-* Node.js 18.x or later (recommended to use Node.js 20.x or later)
-
-### Cloning the Repository
-
-Clone the repository using the following command:
+## Bắt đầu dự án mới trong 10 phút
 
 ```bash
-git clone https://github.com/TailAdmin/free-nextjs-admin-dashboard.git
+# 1. Lấy code base
+git clone <repo-này> my-app && cd my-app
+npm install
+
+# 2. Dọn thành dự án của bạn (rename app, reset dashboard, list demo để xóa)
+npm run new:project
+
+# 3. Xóa các demo module không dùng (script sẽ liệt kê sẵn lệnh)
+#    VD: rm -rf src/features/calendar "src/app/(admin)/calendar"
+
+# 4. Copy module mẫu và bắt đầu nghiệp vụ đầu tiên
+cp -r src/features/_template src/features/orders
+
+# 5. Chạy
+npm run dev
 ```
 
-> Windows Users: place the repository near the root of your drive if you face issues while cloning.
+Ba việc khi thêm một domain module mới (bất kỳ nghiệp vụ gì):
 
-1. Install dependencies:
+1. Copy `src/features/_template/` → `src/features/<domain>/`.
+2. Tạo route `src/app/(admin)/<domain>/page.tsx` import từ feature.
+3. Thêm 1 entry menu trong `src/components/layout/nav-items.tsx`.
 
-   ```bash
-   npm install
-   # or
-   yarn install
-   ```
+Xóa nghiệp vụ = xóa đúng 1 thư mục feature + 1 route. Không chặt lan man.
 
-   > Use `--legacy-peer-deps` flag if you face peer-dependency error during installation.
+## Cấu trúc thư mục
 
-2. Start the development server:
+```text
+src/
+├── app/                    # Routing only — pages, layouts, route handlers
+│   ├── (admin)/            #   khu vực quản trị (sidebar + header)
+│   ├── (auth)/             #   signin / signup
+│   ├── (error-pages)/      #   404...
+│   └── api/                #   REST route handlers (khi cần)
+├── components/
+│   ├── ui/                 # UI primitives: button, table, form, chart, modal...
+│   ├── layout/             # Khung admin: AppSidebar, AppHeader, nav-items
+│   └── shared/             # Dùng chung không primitive: ComponentCard, Breadcrumb...
+├── features/               # ★ Domain modules — trái tim code base
+│   ├── _template/          #   module mẫu rỗng (copy khi tạo module mới)
+│   ├── dashboard/  auth/  calendar/  charts/  forms/  tables/  media/  profile/
+│   └── <domain>/
+│       ├── components/     #   UI riêng domain
+│       ├── hooks/          #   hooks riêng domain
+│       ├── types.ts        #   type riêng domain
+│       └── index.ts        #   public API — nơi khác chỉ import từ đây
+├── hooks/                  # Cross-feature hooks (useModal, useGoBack)
+├── context/                # Providers toàn app (Sidebar, Theme)
+├── lib/                    # api-client, utils (cn), constants
+├── server/actions/         # Server Actions theo domain (zod validate đầu vào)
+└── types/                  # Type dùng chung toàn app
+```
 
-   ```bash
-   npm run dev
-   # or
-   yarn dev
-   ```
+Nguyên tắc phụ thuộc một chiều: `app → features → (ui/lib/hooks/types)`. Feature không import feature. Chi tiết: [CLEANCODE.md](./CLEANCODE.md).
 
-## Components
+## Data layer — "cắm" backend của bạn
 
-TailAdmin is a pre-designed starting point for building a web-based dashboard using Next.js and Tailwind CSS. The template includes:
+- Client gọi API qua `api` từ `@/lib/api-client` (typed, error chuẩn `ApiError`, base URL từ env).
+- Server-side: đặt Server Action trong `src/server/actions/<domain>.ts`, validate input bằng zod — xem mẫu `src/server/actions/example.ts`.
+- Biến môi trường: copy `.env.example` → `.env.local`, điền `NEXT_PUBLIC_APP_NAME` + `NEXT_PUBLIC_API_BASE_URL`.
 
-* Sophisticated and accessible sidebar
-* Data visualization components
-* Profile management and custom 404 page
-* Tables and Charts(Line and Bar)
-* Authentication forms and input elements
-* Alerts, Dropdowns, Modals, Buttons and more
-* Can't forget Dark Mode 🕶️
+## Quality gates (bắt buộc trước khi merge)
 
-All components are built with React and styled using Tailwind CSS for easy customization.
+```bash
+npm run lint          # ESLint: cấm any, console, import ../.., circular deps
+npm run format:check  # Prettier thống nhất toàn repo
+npm run build         # Next.js production build
+```
 
-## Feature Comparison
+Bộ rule đầy đủ (13 rule, mapping sang ESLint/Prettier): [CLEANCODE.md](./CLEANCODE.md). AI agent đọc: [AGENTS.md](./AGENTS.md).
 
-### Free Version
+## Workflow spec-driven (OpenSpec)
 
-* 1 Unique Dashboard
-* 30+ dashboard components
-* 50+ UI elements
-* Basic Figma design files
-* Community support
+Thay đổi lớn đi qua spec trước khi code: `openspec/changes/<change>/` chứa proposal → specs (requirements + scenarios Given/When/Then) → design → tasks. Validate bằng `openspec validate <change> --strict`. Đọc `AGENTS.md` để biết luồng chi tiết.
 
-### Pro Version
+## Credits
 
-* 7 Unique Dashboards: Analytics, Ecommerce, Marketing, CRM, SaaS, Stocks, Logistics (more coming soon)
-* 500+ dashboard components and UI elements
-* Complete Figma design file
-* Email support
-
-To learn more about pro version features and pricing, visit our [pricing page](https://tailadmin.com/pricing).
-
-## Changelog
-
-### Version 2.3.0 - [April 28, 2026]
-
-- **New Feature**: Added **AI Dashboard** with token usage and revenue tracking.
-- **New Feature**: Added **Sales Dashboard** with retention and multi-channel analytics.
-- **New Feature**: Added **Finance Dashboard** with cashflow and balance management.
-- **New Feature**: Introduced **6 New Layout variations** for improved UI flexibility.
-- **Enhancement**: Integrated **Advanced Data Visualization** with 7+ new chart types.
-
-### Version 2.2.3 - [March 15, 2026]
-
-* update ESLint configuration and dependencies; upgrade Next.js to version 16.1.6
-
-### Version 2.2.2 - [December 30, 2025]
-
-* Fixed date picker positioning and functionality in Statistics Chart.
-
-
-### Version 2.1.0 - [November 15, 2025]
-
-* Updated to Next.js 16.x
-* Fixed all reported minor bugs
-
-### Version 2.0.2 - [March 25, 2025]
-
-* Upgraded to Next.js 16.x for [CVE-2025-29927](https://nextjs.org/blog/cve-2025-29927) concerns
-* Included overrides vectormap for packages to prevent peer dependency errors during installation.
-* Migrated from react-flatpickr to flatpickr package for React 19 support
-
-### Version 2.0.1 - [February 27, 2025]
-
-#### Update Overview
-
-* Upgraded to Tailwind CSS v4 for better performance and efficiency.
-* Updated class usage to match the latest syntax and features.
-* Replaced deprecated class and optimized styles.
-
-#### Next Steps
-
-* Run npm install or yarn install to update dependencies.
-* Check for any style changes or compatibility issues.
-* Refer to the Tailwind CSS v4 [Migration Guide](https://tailwindcss.com/docs/upgrade-guide) on this release. if needed.
-* This update keeps the project up to date with the latest Tailwind improvements. 🚀
-
-### v2.0.0 (February 2025)
-
-A major update focused on Next.js 16 implementation and comprehensive redesign.
-
-#### Major Improvements
-
-* Complete redesign using Next.js 16 App Router and React Server Components
-* Enhanced user interface with Next.js-optimized components
-* Improved responsiveness and accessibility
-* New features including collapsible sidebar, chat screens, and calendar
-* Redesigned authentication using Next.js App Router and server actions
-* Updated data visualization using ApexCharts for React
-
-#### Breaking Changes
-
-* Migrated from Next.js 14 to Next.js 16
-* Chart components now use ApexCharts for React
-* Authentication flow updated to use Server Actions and middleware
-
-[Read more](https://tailadmin.com/docs/update-logs/nextjs) on this release.
-
-### v1.3.4 (July 01, 2024)
-
-* Fixed JSvectormap rendering issues
-
-### v1.3.3 (June 20, 2024)
-
-* Fixed build error related to Loader component
-
-### v1.3.2 (June 19, 2024)
-
-* Added ClickOutside component for dropdown menus
-* Refactored sidebar components
-* Updated Jsvectormap package
-
-### v1.3.1 (Feb 12, 2024)
-
-* Fixed layout naming consistency
-* Updated styles
-
-### v1.3.0 (Feb 05, 2024)
-
-* Upgraded to Next.js 14
-* Added Flatpickr integration
-* Improved form elements
-* Enhanced multiselect functionality
-* Added default layout component
+UI gốc từ [TailAdmin](https://tailadmin.com) — Tailwind admin dashboard template (MIT). H2Base refactor cấu trúc, thêm data layer + rule + luồng khởi động nhanh.
 
 ## License
 
-TailAdmin Next.js Free Version is released under the MIT License.
-
-## Support
-If you find this project helpful, please consider giving it a star on GitHub. Your support helps us continue developing and maintaining this template.
+MIT

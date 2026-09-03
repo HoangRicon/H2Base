@@ -41,7 +41,7 @@ const AppSidebar: React.FC = () => {
   // Submenu mở = override tạm của user, ngược lại derive từ pathname.
   const openSubmenu: OpenSubmenu = useMemo(
     () => manualSubmenu ?? findActiveSubmenu(pathname, isActive),
-    [manualSubmenu, pathname, isActive]
+    [manualSubmenu, pathname, isActive],
   );
 
   // Đo chiều cao submenu khi mở để animate height.
@@ -58,9 +58,7 @@ const AppSidebar: React.FC = () => {
 
   const handleSubmenuToggle = (index: number, menuType: MenuType) => {
     setManualSubmenu((prev) =>
-      prev && prev.type === menuType && prev.index === index
-        ? null
-        : { type: menuType, index }
+      prev && prev.type === menuType && prev.index === index ? null : { type: menuType, index },
     );
   };
 
@@ -95,7 +93,7 @@ const AppSidebar: React.FC = () => {
               {isExpanded || isHovered || isMobileOpen ? (
                 <ChevronDownIcon
                   className={`ml-auto h-5 w-5 transition-transform duration-200 ${
-                    isSubmenuOpen(menuType, index) ? "rotate-180 text-brand-500" : ""
+                    isSubmenuOpen(menuType, index) ? "text-brand-500 rotate-180" : ""
                   }`}
                 />
               ) : null}
@@ -110,9 +108,7 @@ const AppSidebar: React.FC = () => {
               >
                 <span
                   className={`${
-                    isActive(nav.path)
-                      ? "menu-item-icon-active"
-                      : "menu-item-icon-inactive"
+                    isActive(nav.path) ? "menu-item-icon-active" : "menu-item-icon-inactive"
                   }`}
                 >
                   {nav.icon}
@@ -184,16 +180,14 @@ const AppSidebar: React.FC = () => {
 
   return (
     <aside
-      className={`fixed mt-16 flex flex-col top-0 left-0 z-50 h-screen border-r border-gray-200 bg-white px-5 text-gray-900 transition-all duration-300 ease-in-out lg:mt-0 dark:border-gray-800 dark:bg-gray-900 ${
+      className={`fixed top-0 left-0 z-50 mt-16 flex h-screen flex-col border-r border-gray-200 bg-white px-5 text-gray-900 transition-all duration-300 ease-in-out lg:mt-0 dark:border-gray-800 dark:bg-gray-900 ${
         isExpanded || isMobileOpen || isHovered ? "w-[290px]" : "w-[90px]"
       } ${isMobileOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0`}
       onMouseEnter={() => !isExpanded && setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       <div
-        className={`flex py-8 ${
-          !isExpanded && !isHovered ? "lg:justify-center" : "justify-start"
-        }`}
+        className={`flex py-8 ${!isExpanded && !isHovered ? "lg:justify-center" : "justify-start"}`}
       >
         <Link href="/">
           {isExpanded || isHovered || isMobileOpen ? (
@@ -214,12 +208,7 @@ const AppSidebar: React.FC = () => {
               />
             </>
           ) : (
-            <Image
-              src="/images/logo/logo-icon.svg"
-              alt="Logo"
-              width={32}
-              height={32}
-            />
+            <Image src="/images/logo/logo-icon.svg" alt="Logo" width={32} height={32} />
           )}
         </Link>
       </div>
@@ -228,7 +217,7 @@ const AppSidebar: React.FC = () => {
           <div className="flex flex-col gap-4">
             <div>
               <h2
-                className={`mb-4 flex text-xs uppercase leading-[20px] text-gray-400 ${
+                className={`mb-4 flex text-xs leading-[20px] text-gray-400 uppercase ${
                   !isExpanded && !isHovered ? "lg:justify-center" : "justify-start"
                 }`}
               >
@@ -238,7 +227,7 @@ const AppSidebar: React.FC = () => {
             </div>
             <div>
               <h2
-                className={`mb-4 flex text-xs uppercase leading-[20px] text-gray-400 ${
+                className={`mb-4 flex text-xs leading-[20px] text-gray-400 uppercase ${
                   !isExpanded && !isHovered ? "lg:justify-center" : "justify-start"
                 }`}
               >

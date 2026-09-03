@@ -1,11 +1,11 @@
 "use client";
-import React, { useState } from 'react';
-import ComponentCard from '@/components/shared/ComponentCard';
-import Label from '@/features/forms/Label';
-import Input from '@/features/forms/InputField';
-import Select from '@/features/forms/Select';
-import { ChevronDownIcon, EyeCloseIcon, EyeIcon, TimeIcon } from '@/icons';
-import DatePicker from '@/features/forms/date-picker';
+import React, { useState } from "react";
+import ComponentCard from "@/components/shared/ComponentCard";
+import Label from "@/features/forms/Label";
+import Input from "@/features/forms/InputField";
+import Select from "@/features/forms/Select";
+import { ChevronDownIcon, EyeCloseIcon, EyeIcon, TimeIcon } from "@/icons";
+import DatePicker from "@/features/forms/date-picker";
 
 export default function DefaultInputs() {
   const [showPassword, setShowPassword] = useState(false);
@@ -14,9 +14,7 @@ export default function DefaultInputs() {
     { value: "template", label: "Template" },
     { value: "development", label: "Development" },
   ];
-  const handleSelectChange = (value: string) => {
-    console.log("Selected value:", value);
-  };
+  const handleSelectChange = (_value: string) => {};
   return (
     <ComponentCard title="Default Inputs">
       <div className="space-y-6">
@@ -32,26 +30,23 @@ export default function DefaultInputs() {
           <Label>Select Input</Label>
           <div className="relative">
             <Select
-            options={options}
-            placeholder="Select an option"
-            onChange={handleSelectChange}
-            className="dark:bg-dark-900"
-          />
-             <span className="absolute text-gray-500 -translate-y-1/2 pointer-events-none right-3 top-1/2 dark:text-gray-400">
-              <ChevronDownIcon/>
+              options={options}
+              placeholder="Select an option"
+              onChange={handleSelectChange}
+              className="dark:bg-dark-900"
+            />
+            <span className="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-gray-500 dark:text-gray-400">
+              <ChevronDownIcon />
             </span>
           </div>
         </div>
         <div>
           <Label>Password Input</Label>
           <div className="relative">
-            <Input
-              type={showPassword ? "text" : "password"}
-              placeholder="Enter your password"
-            />
+            <Input type={showPassword ? "text" : "password"} placeholder="Enter your password" />
             <button
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute z-30 -translate-y-1/2 cursor-pointer right-4 top-1/2"
+              className="absolute top-1/2 right-4 z-30 -translate-y-1/2 cursor-pointer"
             >
               {showPassword ? (
                 <EyeIcon className="fill-gray-500 dark:fill-gray-400" />
@@ -67,9 +62,8 @@ export default function DefaultInputs() {
             id="date-picker"
             label="Date Picker Input"
             placeholder="Select a date"
-            onChange={(dates, currentDateString) => {
+            onChange={() => {
               // Handle your logic
-              console.log({ dates, currentDateString });
             }}
           />
         </div>
@@ -77,13 +71,8 @@ export default function DefaultInputs() {
         <div>
           <Label htmlFor="tm">Time Picker Input</Label>
           <div className="relative">
-            <Input
-              type="time"
-              id="tm"
-              name="tm"
-              onChange={(e) => console.log(e.target.value)}
-            />
-            <span className="absolute text-gray-500 -translate-y-1/2 pointer-events-none right-3 top-1/2 dark:text-gray-400">
+            <Input type="time" id="tm" name="tm" onChange={() => {}} />
+            <span className="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-gray-500 dark:text-gray-400">
               <TimeIcon />
             </span>
           </div>
@@ -91,12 +80,8 @@ export default function DefaultInputs() {
         <div>
           <Label htmlFor="tm">Input with Payment</Label>
           <div className="relative">
-            <Input
-              type="text"
-              placeholder="Card number"
-              className="pl-[62px]"
-            />
-            <span className="absolute left-0 top-1/2 flex h-11 w-[46px] -translate-y-1/2 items-center justify-center border-r border-gray-200 dark:border-gray-800">
+            <Input type="text" placeholder="Card number" className="pl-[62px]" />
+            <span className="absolute top-1/2 left-0 flex h-11 w-[46px] -translate-y-1/2 items-center justify-center border-r border-gray-200 dark:border-gray-800">
               <svg
                 width="20"
                 height="20"

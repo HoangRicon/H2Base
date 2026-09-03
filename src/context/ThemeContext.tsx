@@ -17,9 +17,7 @@ function readStoredTheme(): Theme {
   return localStorage.getItem("theme") === "dark" ? "dark" : "light";
 }
 
-export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
+export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   // Lazy initializer nạp theme đã lưu NGAY lần render đầu (client-only provider)
   // — không cần setState trong effect.
   const [theme, setTheme] = useState<Theme>(readStoredTheme);
@@ -34,11 +32,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
     setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
   };
 
-  return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      {children}
-    </ThemeContext.Provider>
-  );
+  return <ThemeContext.Provider value={{ theme, toggleTheme }}>{children}</ThemeContext.Provider>;
 };
 
 export const useTheme = () => {

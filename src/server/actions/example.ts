@@ -16,8 +16,7 @@ const exampleInputSchema = z.object({
 });
 
 export type ExampleActionResult =
-  | { ok: true; data: { greeting: string } }
-  | { ok: false; error: string };
+  { ok: true; data: { greeting: string } } | { ok: false; error: string };
 
 export async function exampleAction(input: unknown): Promise<ExampleActionResult> {
   const parsed = exampleInputSchema.safeParse(input);

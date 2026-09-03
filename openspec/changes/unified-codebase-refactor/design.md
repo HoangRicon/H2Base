@@ -64,11 +64,11 @@ H2Base/
 
 ### Vì sao chọn cấu trúc này (alternatives đã cân nhắc)
 
-| Phương án | Lý do không chọn |
-|---|---|
-| **Giữ nguyên kiểu TailAdmin** (`components/ecommerce`, `components/form`... theo loại) | Feature phân tán nhiều nơi; thêm/xóa nghiệp vụ phải chặt khắp 5 thư mục; không scale cho N dự án quản lý |
-| **FSD (feature-sliced design)** | Chuẩn nhưng cộng đồng Next.js ít dùng, thêm khái niệm `entities/shared` gây tốn công học cho AI + dev mới |
-| **Chọn: App Router chuẩn cộng đồng + `features/`** | Next.js docs chính thức khuyến nghị nhóm theo feature; AI agent hiểu ngay từ README Next.js; thêm module = 1 thư mục + 1 route |
+| Phương án                                                                              | Lý do không chọn                                                                                                               |
+| -------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| **Giữ nguyên kiểu TailAdmin** (`components/ecommerce`, `components/form`... theo loại) | Feature phân tán nhiều nơi; thêm/xóa nghiệp vụ phải chặt khắp 5 thư mục; không scale cho N dự án quản lý                       |
+| **FSD (feature-sliced design)**                                                        | Chuẩn nhưng cộng đồng Next.js ít dùng, thêm khái niệm `entities/shared` gây tốn công học cho AI + dev mới                      |
+| **Chọn: App Router chuẩn cộng đồng + `features/`**                                     | Next.js docs chính thức khuyến nghị nhóm theo feature; AI agent hiểu ngay từ README Next.js; thêm module = 1 thư mục + 1 route |
 
 Nguyên tắc phụ thuộc một chiều (no circular deps — constitution §2):
 
@@ -83,28 +83,30 @@ Kiểm tra bằng ESLint rule `import/no-cycle` (runtime-enforced, không chỉ 
 
 ### Chuyển đổi (mapping) từ cấu trúc cũ
 
-| Hiện tại | Chuyển đến |
-|---|---|
+| Hiện tại                                             | Chuyển đến                                                                                                                                       |
+| ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `src/layout/AppSidebar.tsx` + menu hardcode 383 dòng | `src/components/layout/` + menu items tách thành `src/features/navigation/menu-items.ts` (khai báo theo domain — thêm module mới = thêm 1 entry) |
-| `src/components/ecommerce/*` | `src/features/dashboard/*` |
-| `src/components/auth/*` | `src/features/auth/*` |
-| `src/components/calendar|user-profile|charts|form|tables/*` | `src/features/<tên>/*` tương ứng |
-| `src/components/common/*` | `src/components/shared/*` |
-| `src/components/example/*` | `src/features/forms/*` (gộp demo forms) |
-| `src/components/ui/*` | giữ `src/components/ui/*` (đã đúng chỗ) |
-| `src/components/header/*` | `src/components/layout/*` |
-| `src/components/videos/*` | `src/features/media/*` |
-| `src/app/(admin)/(others-pages)/...` | `src/app/(admin)/calendar`, `/charts`, ... (bỏ nesting group thừa) |
+| `src/components/ecommerce/*`                         | `src/features/dashboard/*`                                                                                                                       |
+| `src/components/auth/*`                              | `src/features/auth/*`                                                                                                                            |
+| `src/components/calendar                             | user-profile                                                                                                                                     | charts | form | tables/*` | `src/features/<tên>/*` tương ứng |
+| `src/components/common/*`                            | `src/components/shared/*`                                                                                                                        |
+| `src/components/example/*`                           | `src/features/forms/*` (gộp demo forms)                                                                                                          |
+| `src/components/ui/*`                                | giữ `src/components/ui/*` (đã đúng chỗ)                                                                                                          |
+| `src/components/header/*`                            | `src/components/layout/*`                                                                                                                        |
+| `src/components/videos/*`                            | `src/features/media/*`                                                                                                                           |
+| `src/app/(admin)/(others-pages)/...`                 | `src/app/(admin)/calendar`, `/charts`, ... (bỏ nesting group thừa)                                                                               |
 
 ## D2. Bộ rule clean code (chất liệu cho CLEANCODE.md + AGENTS.md)
 
 ### Quy tắc cấu trúc
+
 1. File component: `PascalCase.tsx`, export named (đồng nhất), folder cha `kebab-case`.
 2. 1 component = 1 file chính; file > 250 dòng → tách.
 3. Server/Client tách bạch: `"use client"` chỉ xuất hiện trong `components/`, `features/`, `hooks/` — không trong `server/`.
 4. Cấm `../../` trở lên (ESLint `no-restricted-imports` pattern) — dùng `@/`.
 
 ### Quy tắc code
+
 5. TS strict, cấm `any` (ESLint `@typescript-eslint/no-explicit-any: error`).
 6. Cấm `console.*` trong code commit (`no-console: error`) — thay bằng `logger` wrapper đặt tại `lib/logger.ts` khi cần.
 7. Không magic values — constants đặt tên trong `lib/constants.ts` hoặc colocated `*.const.ts`.
@@ -113,11 +115,13 @@ Kiểm tra bằng ESLint rule `import/no-cycle` (runtime-enforced, không chỉ 
 10. Mọi Server Action validate bằng zod schema trước khi chạm data.
 
 ### Quy tắc tooling (CI-enforced)
+
 11. `npm run lint` = ESLint (flat config) + `prettier --check` — bắt buộc pass.
 12. `npm run build` pass là điều kiện merge.
 13. `prettier-plugin-tailwindcss` sort class tự động (đã có) — giữ.
 
 ### Tại sao rule này
+
 - Mỗi rule map trực tiếp vào ESLint/Prettier để **tooling ép buộc**, không phụ thuộc kỷ luật con người.
 - Danh sách ngắn (13) — rule quá dài không ai đọc, kể cả AI.
 
@@ -127,10 +131,15 @@ Kiểm tra bằng ESLint rule `import/no-cycle` (runtime-enforced, không chỉ 
 // src/lib/api-client.ts (khung)
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? "/api";
 
-export class ApiError extends Error { /* status, payload chuẩn */ }
+export class ApiError extends Error {
+  /* status, payload chuẩn */
+}
 
 export async function apiClient<T>(path: string, init?: RequestInit): Promise<T> {
-  const res = await fetch(`${BASE_URL}${path}`, { ...init, headers: { "Content-Type": "application/json", ...init?.headers } });
+  const res = await fetch(`${BASE_URL}${path}`, {
+    ...init,
+    headers: { "Content-Type": "application/json", ...init?.headers },
+  });
   if (!res.ok) throw new ApiError(res.status, await safeJson(res));
   return res.json();
 }
@@ -143,6 +152,7 @@ export async function apiClient<T>(path: string, init?: RequestInit): Promise<T>
 ## D4. Luồng "bắt đầu nhanh" (script + docs)
 
 `scripts/new-project.mjs` (Node, không dependency):
+
 1. Hỏi tên dự án → thay `package.json` name + `NEXT_PUBLIC_APP_NAME`.
 2. Đặt `src/app/(admin)/page.tsx` thành dashboard trống (dùng `features/_template`).
 3. Liệt kê thư mục demo trong `features/` kèm lệnh xóa gợi ý — KHÔNG tự xóa (an toàn, user quyết).
@@ -152,12 +162,12 @@ CI/verify: script chạy được bằng `node scripts/new-project.mjs` trên b�
 
 ## D5. Risks & mitigations
 
-| Risk | Mitigation |
-|---|---|
-| Move 105 file dễ vỡ import | Di chuyển theo nhóm nhỏ + `npm run build` sau mỗi nhóm; đổi import bằng find-sed có kiểm soát + IDE rename |
-| Demo pages reference component cũ | Mapping table ở trên là checklist bắt buộc complete trước khi build |
-| `no-console: error` phát nổ ở code cũ (template có console.log) | Format task: thay/clean hết trong phase refactor trước khi bật rule |
-| Script xóa demo phá repo user | Script chỉ list + dry-run, không tự xóa |
+| Risk                                                            | Mitigation                                                                                                 |
+| --------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| Move 105 file dễ vỡ import                                      | Di chuyển theo nhóm nhỏ + `npm run build` sau mỗi nhóm; đổi import bằng find-sed có kiểm soát + IDE rename |
+| Demo pages reference component cũ                               | Mapping table ở trên là checklist bắt buộc complete trước khi build                                        |
+| `no-console: error` phát nổ ở code cũ (template có console.log) | Format task: thay/clean hết trong phase refactor trước khi bật rule                                        |
+| Script xóa demo phá repo user                                   | Script chỉ list + dry-run, không tự xóa                                                                    |
 
 ## D6. Test strategy
 
