@@ -13,38 +13,38 @@
 
 ### Nhóm 0 — Chuẩn bị & dọn config
 
-- [ ] 0.1 Branch `refactor/unified-codebase`
-- [ ] 0.2 Xóa `.eslintrc.json` + `.idea/` khỏi git
-- [ ] 0.3 Prettier config + scripts `format`/`format:check`
+- [x] 0.1 Branch `refactor/unified-codebase`
+- [x] 0.2 Xóa `.eslintrc.json` + `.idea/` khỏi git
+- [x] 0.3 Prettier config + scripts `format`/`format:check`
 
 ### Nhóm 1 — Khung cấu trúc đích
 
-- [ ] 1.1 Tree thư mục đích rỗng
-- [ ] 1.2 Data layer khung (api-client, utils, constants, .env.example)
-- [ ] 1.3 Module mẫu `features/_template/`
+- [x] 1.1 Tree thư mục đích rỗng
+- [x] 1.2 Data layer khung (api-client, utils, constants, .env.example)
+- [x] 1.3 Module mẫu `features/_template/`
 
 ### Nhóm 2 — Di chuyển components (build checkpoint sau mỗi task)
 
-- [ ] 2.1 layout/* + header/* + common/ → components/layout + components/shared
-- [ ] 2.2 Tách navItems khỏi AppSidebar (383 dòng → <150)
-- [ ] 2.3 ecommerce/* → features/dashboard
-- [ ] 2.4 auth/calendar/profile/charts/example/form/tables/videos → features/*
-- [ ] 2.5 Dọn console.log/any trong code đã di chuyển
+- [x] 2.1 layout/* + header/* + common/ → components/layout + components/shared
+- [x] 2.2 Tách navItems khỏi AppSidebar (383 dòng → <150)
+- [x] 2.3 ecommerce/* → features/dashboard
+- [x] 2.4 auth/calendar/profile/charts/example/form/tables/videos → features/*
+- [x] 2.5 Dọn console.log/any trong code đã di chuyển
 
 ### Nhóm 3 — Rules & docs
 
-- [ ] 3.1 CLEANCODE.md + AGENTS.md
-- [ ] 3.2 ESLint rules mới (no-console, no-explicit-any, no-cycle, no-restricted-imports)
-- [ ] 3.3 README mới (luồng khởi động nhanh)
+- [x] 3.1 CLEANCODE.md + AGENTS.md
+- [x] 3.2 ESLint rules mới (no-console, no-explicit-any, no-cycle, no-restricted-imports)
+- [x] 3.3 README mới (luồng khởi động nhanh)
 
 ### Nhóm 4 — Khởi động nhanh
 
-- [ ] 4.1 scripts/new-project.mjs + npm script
-- [ ] 4.2 Verify tổng: lint + format:check + build + smoke routes
+- [x] 4.1 scripts/new-project.mjs + npm script
+- [x] 4.2 Verify tổng: lint + format:check + build + smoke routes
 
 ### Nhóm 5 — Archive
 
-- [ ] 5.1 Cập nhật checkbox, openspec archive, merge
+- [x] 5.1 Cập nhật checkbox, openspec archive, merge
 
 ## Checkpoint build bắt buộc
 

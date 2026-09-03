@@ -18,6 +18,35 @@
 
 - Tạo task_plan.md (checklist đồng bộ), findings.md, progress.md (file này).
 
-### Next
+### Phase 4 — Implementation (branch `refactor/unified-codebase`)
 
-- Nhóm 0: branch + dọn config → bắt đầu thực hiện.
+| Nhóm    | Commit    | Nội dung                                                                                                                                                                                                                      | Build |
+| ------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| 0       | `3abf3a3` | Branch, xóa `.eslintrc.json` trùng, untrack `.idea/`, prettier config + scripts, cài zod/eslint-plugin-import/clsx                                                                                                            | pass  |
+| 1       | `dcba9fe` | Khung đích: `lib/api-client                                                                                                                                                                                                   | utils | constants`, `server/actions/example`, `types/`, `features/_template`, `.env.example` | pass |
+| 2.1–2.2 | `4ecc938` | layout/header/common → `components/layout` + `components/shared`; tách `nav-items.tsx` khỏi AppSidebar (383→252 dòng)                                                                                                         | pass  |
+| 2.3–2.4 | `6ab53c5` | Moves: ecommerce→dashboard, auth, calendar, user-profile→profile, charts, example+form→forms, tables, videos→media; flatten routes `(others-pages)/(ui-elements)/(full-width-pages)` → `(admin)/x`, `(auth)`, `(error-pages)` | pass  |
+| 2.5     | `e6fe59a` | Dọn 5 lint errors template (jsvectormap.dts bỏ, escape entity, lazy initializers Calendar/Theme, derive submenu từ pathname) — lint 0 problems                                                                                | pass  |
+| 3       | `eba95b6` | `CLEANCODE.md` (13 rules) + `AGENTS.md`; ESLint: `no-console:error`, `no-explicit-any:error`, `import/no-cycle:error`, `no-restricted-imports` cấm `../`; xóa console.log demo; README mới full onboarding                    | pass  |
+| 4       | `b536241` | `scripts/new-project.mjs` (rename + reset dashboard + list demo dry-run); prettier full repo                                                                                                                                  | pass  |
+
+### Gate G4 — Verification evidence (2026-09-03)
+
+- `npm run lint` → **0 errors, 0 warnings**.
+- `npm run format:check` → **"All matched files use Prettier code style!"**.
+- `npm run build` → **✓ Compiled successfully**, 21/21 routes generate.
+- Rule verification: file test chứa `any` + `console.log` → lint báo đúng 2 errors → đã xóa file test.
+- Script verification: `npm run new:project -- --dry-run` không đổi file nào; run thật đổi đúng package.json name, `.env.local` NEXT_PUBLIC_APP_NAME, reset `(admin)/page.tsx` (backup `.bak`) — working copy đã restore bằng git.
+- Smoke test prod server (`next start`): 9/9 routes **HTTP 200** — `/`, `/calendar`, `/form-elements`, `/basic-tables`, `/profile`, `/signin`, `/error-404`, `/videos`, `/bar-chart`.
+
+### Phase 5 — Archive
+
+- Checkbox 17/17 tasks + task_plan.md cập nhật.
+- `openspec archive unified-codebase-refactor`.
+- Merge `refactor/unified-codebase` → `main`.
+
+### Ghi chú / follow-up cho change kế tiếp
+
+- Chưa có unit test (out of scope theo proposal) — khuyến nghị change tiếp theo cài Vitest + Testing Library, TDD từ module đầu tiên.
+- Auth thật (NextAuth) + DB layer (Prisma/Drizzle) chưa cắm — đã chừa khung `server/`, `lib/api-client`, `.env.example`.
+- `components/ui` vẫn là UI TailAdmin gốc — ổn dùng, có thể nâng cấp dần sang pattern `button/Button.tsx + index.ts` khi chạm tới.
