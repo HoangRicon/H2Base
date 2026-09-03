@@ -1,10 +1,10 @@
 "use client";
 import React, { useState } from 'react';
-import ComponentCard from '../../common/ComponentCard';
+import ComponentCard from '@/components/shared/ComponentCard';
 import Label from '../Label';
 import Input from '../input/InputField';
 import Select from '../Select';
-import { ChevronDownIcon, EyeCloseIcon, EyeIcon, TimeIcon } from '../../../icons';
+import { ChevronDownIcon, EyeCloseIcon, EyeIcon, TimeIcon } from '@/icons';
 import DatePicker from '@/components/form/date-picker';
 
 export default function DefaultInputs() {

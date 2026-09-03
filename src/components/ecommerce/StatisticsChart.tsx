@@ -3,8 +3,8 @@ import { useEffect, useRef } from "react";
 import dynamic from "next/dynamic";
 import { ApexOptions } from "apexcharts";
 import flatpickr from "flatpickr";
-import ChartTab from "../common/ChartTab";
-import { CalenderIcon } from "../../icons";
+import ChartTab from "@/components/shared/ChartTab";
+import { CalenderIcon } from "@/icons";
 
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 

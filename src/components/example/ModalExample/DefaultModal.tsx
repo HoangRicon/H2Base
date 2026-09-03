@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import ComponentCard from "../../common/ComponentCard";
+import ComponentCard from "@/components/shared/ComponentCard";
 
 import { Modal } from "../../ui/modal";
 import Button from "../../ui/button/Button";
