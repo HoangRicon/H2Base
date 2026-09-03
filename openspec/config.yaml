@@ -1,0 +1,32 @@
+# OpenSpec Project Configuration — H2Base
+# Đối chiếu constitution: every gate (G1–G4) đọc file này và verify clause by clause.
+
+schema: spec-driven
+
+context: |
+  Project: H2Base — code base chuẩn dùng chung cho mọi dự án webapp quản lý (admin dashboard).
+  Nguồn gốc: TailAdmin free Next.js admin dashboard template (Next.js 16, React 19, TS strict,
+  Tailwind CSS v4, App Router). Hiện tại là template thuần UI: 105 file TS/TSX (~8.4k dòng),
+  22 pages, chưa có data layer (lib/services/api/types), menu sidebar hardcode trong
+  src/layout/AppSidebar.tsx, config lint chỉ mặc định, .eslintrc.json trùng lặp với
+  eslint.config.mjs.
+  Mục tiêu: refactor thành 1 code base thống nhất, tái sử dụng cho mọi dự án webapp quản lý,
+  fullstack (Next.js App Router: server actions + route handlers), có bộ rule clean code
+  và cấu trúc thư mục chuẩn hóa, khởi động dự án mới cực nhanh.
+
+rules:
+  proposal:
+    - Viết từ góc nhìn sản phẩm (What & Why), không chứa chi tiết kỹ thuật.
+    - Phải có rollback plan.
+    - Nêu rõ phạm vi in-scope / out-of-scope.
+  specs:
+    - Use Given/When/Then format for scenarios.
+    - Mỗi requirement phải có ID duy nhất và testable acceptance criteria.
+  design:
+    - Mọi quyết định kỹ thuật phải nêu ít nhất 1 alternative đã cân nhắc và lý do chọn.
+    - Không được violate constitution (clean code, no circular deps, tooling-enforced style).
+    - Cấu trúc thư mục phải phục vụ mục tiêu "bắt đầu nhanh" — ưu tiên chuẩn cộng đồng Next.js
+      để AI/developer mới onboard ngay.
+  tasks:
+    - Mỗi task phải có file paths cụ thể, acceptance criteria và test strategy.
+    - Task refactor phải giữ app build pass (`npm run build`) sau mỗi nhóm task.
