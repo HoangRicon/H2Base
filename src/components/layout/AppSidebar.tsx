@@ -6,8 +6,8 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useSidebar } from "@/context/SidebarContext";
 import { ChevronDownIcon, HorizontaLDots } from "@/icons";
-import SidebarWidget from "./SidebarWidget";
-import { mainNavItems, othersNavItems, type NavItem } from "./nav-items";
+import SidebarWidget from "@/components/layout/SidebarWidget";
+import { mainNavItems, othersNavItems, type NavItem } from "@/components/layout/nav-items";
 
 type MenuType = "main" | "others";
 
