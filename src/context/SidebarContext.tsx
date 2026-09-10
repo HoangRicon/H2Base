@@ -2,14 +2,14 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 
 type SidebarContextType = {
-  isExpanded: boolean;
+  /** Panel menu rộng cạnh rail (desktop) — toggle bằng nút mở rộng dưới đáy rail. */
+  isSubmenuOpen: boolean;
   isMobileOpen: boolean;
   activeItem: string | null;
-  openSubmenu: string | null;
-  toggleSidebar: () => void;
+  toggleSubmenuPanel: () => void;
+  openSubmenuPanel: () => void;
   toggleMobileSidebar: () => void;
   setActiveItem: (item: string | null) => void;
-  toggleSubmenu: (item: string) => void;
 };
 
 const SidebarContext = createContext<SidebarContextType | undefined>(undefined);
@@ -23,52 +23,35 @@ export const useSidebar = () => {
 };
 
 export const SidebarProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [isExpanded, setIsExpanded] = useState(false); // rail hẹp mặc định — tiết kiệm diện tích
+  const [isSubmenuOpen, setIsSubmenuOpen] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
   const [activeItem, setActiveItem] = useState<string | null>(null);
-  const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
 
   useEffect(() => {
     const handleResize = () => {
-      const mobile = window.innerWidth < 768;
-      setIsMobile(mobile);
-      if (!mobile) {
+      if (window.innerWidth >= 768) {
         setIsMobileOpen(false);
       }
     };
-
-    handleResize();
     window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const toggleSidebar = () => {
-    setIsExpanded((prev) => !prev);
-  };
+  const toggleSubmenuPanel = () => setIsSubmenuOpen((prev) => !prev);
+  const openSubmenuPanel = () => setIsSubmenuOpen(true);
 
-  const toggleMobileSidebar = () => {
-    setIsMobileOpen((prev) => !prev);
-  };
-
-  const toggleSubmenu = (item: string) => {
-    setOpenSubmenu((prev) => (prev === item ? null : item));
-  };
+  const toggleMobileSidebar = () => setIsMobileOpen((prev) => !prev);
 
   return (
     <SidebarContext.Provider
       value={{
-        isExpanded: isMobile ? false : isExpanded,
+        isSubmenuOpen,
         isMobileOpen,
         activeItem,
-        openSubmenu,
-        toggleSidebar,
+        toggleSubmenuPanel,
+        openSubmenuPanel,
         toggleMobileSidebar,
         setActiveItem,
-        toggleSubmenu,
       }}
     >
       {children}
