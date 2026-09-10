@@ -50,3 +50,13 @@
 - Chưa có unit test (out of scope theo proposal) — khuyến nghị change tiếp theo cài Vitest + Testing Library, TDD từ module đầu tiên.
 - Auth thật (NextAuth) + DB layer (Prisma/Drizzle) chưa cắm — đã chừa khung `server/`, `lib/api-client`, `.env.example`.
 - `components/ui` vẫn là UI TailAdmin gốc — ổn dùng, có thể nâng cấp dần sang pattern `button/Button.tsx + index.ts` khi chạm tới.
+
+## 2026-09-10 — Sidebar UX fix (commit c626277)
+
+Yêu cầu: rail thu gọn không bao giờ tự to; hover mới bung; chỉ thư mục con expand; tối ưu diện tích (80% → ~95-100%); responsive theo zoom.
+
+- `SidebarContext`: bỏ `isHovered` (hover giờ là state nội bộ của AppSidebar — layout không đổi khi hover, hết giật).
+- `AppSidebar`: rail 64px mặc định (`isExpanded=false`); hover overlay 240px **đè lên** nội dung không push; submenu chỉ expand trong panel bung; nút **pin/unpin** giữ mở rộng + push khi muốn; xóa promo SidebarWidget; bỏ mt-16 overlap.
+- `AdminLayout`: bỏ `max-w-(--breakpoint-2xl)` + padding 12-16px → nội dung chiếm gần trọn chiều rộng (chỉ trừ 64px rail); push `md:ml-16` ↔ `md:ml-60` khi pin; hover không đổi margin.
+- `AppHeader`: toggle breakpoint lg→md khớp rail mới.
+- Verify: lint 0, format pass, build ✓, smoke `/` + `/calendar` + `/signin` HTTP 200; class render đúng `w-16`/`md:ml-16`.
