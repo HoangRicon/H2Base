@@ -1,8 +1,11 @@
 # unified-admin-codebase Specification
 
 ## Purpose
+
 TBD - created by archiving change unified-codebase-refactor. Update Purpose after archive.
+
 ## Requirements
+
 ### Requirement: Cấu trúc thư mục chuẩn cho mọi webapp quản lý
 
 Code base MUST có một cấu trúc thư mục chuẩn, tài liệu hóa, trong đó:
@@ -101,4 +104,3 @@ Luồng khởi động dự án mới MUST được tài liệu hóa trong READM
 - **Given** dev clone H2Base đã refactor
 - **When** theo README chạy luồng khởi động
 - **Then** trong ≤ 10 phút có app quản trị chạy: đúng tên, dashboard trắng, 1 module mẫu để tham chiếu cách viết module mới
-

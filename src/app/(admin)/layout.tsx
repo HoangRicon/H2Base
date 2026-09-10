@@ -4,29 +4,27 @@ import { useSidebar } from "@/context/SidebarContext";
 import AppHeader from "@/components/layout/AppHeader";
 import AppSidebar from "@/components/layout/AppSidebar";
 import Backdrop from "@/components/layout/Backdrop";
+import { SIDEBAR_CLASSES } from "@/lib/constants";
 import React from "react";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
-  const { isExpanded, isHovered, isMobileOpen } = useSidebar();
+  const { isExpanded } = useSidebar();
 
-  // Dynamic class for main content margin based on sidebar state
-  const mainContentMargin = isMobileOpen
-    ? "ml-0"
-    : isExpanded || isHovered
-      ? "lg:ml-[290px]"
-      : "lg:ml-[90px]";
+  // Nội dung chỉ chừa chỗ khi rail/pinel "ghim" (isExpanded).
+  // - Rail hẹp luôn chiếm 64px từ breakpoint md.
+  // - Pinned → panel 240px, nội dung chừa 240px.
+  // - Hover mở rộng chỉ là overlay, KHÔNG đổi margin → không giật layout.
+  const contentMargin = isExpanded
+    ? SIDEBAR_CLASSES.contentPushExpanded
+    : SIDEBAR_CLASSES.contentPushCollapsed;
 
   return (
-    <div className="min-h-screen xl:flex">
-      {/* Sidebar and Backdrop */}
+    <div className="min-h-screen">
       <AppSidebar />
       <Backdrop />
-      {/* Main Content Area */}
-      <div className={`flex-1 transition-all duration-300 ease-in-out ${mainContentMargin}`}>
-        {/* Header */}
+      <div className={`flex-1 transition-[margin] duration-300 ease-in-out ${contentMargin}`}>
         <AppHeader />
-        {/* Page Content */}
-        <div className="mx-auto max-w-(--breakpoint-2xl) p-4 md:p-6">{children}</div>
+        <div className="p-3 md:p-4">{children}</div>
       </div>
     </div>
   );
