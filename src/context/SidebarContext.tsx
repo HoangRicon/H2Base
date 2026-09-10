@@ -2,12 +2,14 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 
 type SidebarContextType = {
-  /** Panel menu rộng cạnh rail (desktop) — toggle bằng nút mở rộng dưới đáy rail. */
+  /** Panel menu con (cạnh rail) đang mở — PUSH nội dung sang phải, không đè. */
   isSubmenuOpen: boolean;
   isMobileOpen: boolean;
+  /** Section user bấm gần nhất trên rail; null = derive theo route hiện tại. */
+  selectedSection: number | null;
   activeItem: string | null;
   toggleSubmenuPanel: () => void;
-  openSubmenuPanel: () => void;
+  setSelectedSection: (index: number | null) => void;
   toggleMobileSidebar: () => void;
   setActiveItem: (item: string | null) => void;
 };
@@ -25,6 +27,7 @@ export const useSidebar = () => {
 export const SidebarProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isSubmenuOpen, setIsSubmenuOpen] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [selectedSection, setSelectedSection] = useState<number | null>(null);
   const [activeItem, setActiveItem] = useState<string | null>(null);
 
   useEffect(() => {
@@ -38,8 +41,6 @@ export const SidebarProvider: React.FC<{ children: React.ReactNode }> = ({ child
   }, []);
 
   const toggleSubmenuPanel = () => setIsSubmenuOpen((prev) => !prev);
-  const openSubmenuPanel = () => setIsSubmenuOpen(true);
-
   const toggleMobileSidebar = () => setIsMobileOpen((prev) => !prev);
 
   return (
@@ -47,9 +48,10 @@ export const SidebarProvider: React.FC<{ children: React.ReactNode }> = ({ child
       value={{
         isSubmenuOpen,
         isMobileOpen,
+        selectedSection,
         activeItem,
         toggleSubmenuPanel,
-        openSubmenuPanel,
+        setSelectedSection,
         toggleMobileSidebar,
         setActiveItem,
       }}

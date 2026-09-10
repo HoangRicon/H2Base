@@ -2,16 +2,16 @@
 
 import AppHeader from "@/components/layout/AppHeader";
 import AppSidebar from "@/components/layout/AppSidebar";
-import { SIDEBAR_CLASSES } from "@/lib/constants";
 import React from "react";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
-  // Nội dung chỉ chừa đúng chiều rộng rail (w-20) từ breakpoint md.
-  // Panel menu con là overlay cạnh rail — không push layout → không giật.
+  // Sidebar (rail + panel phụ) nằm TRONG FLOW cùng cột nội dung:
+  // panel mở → width tăng trong flex → NỘI DUNG BỊ ĐẨY sang phải (không bị đè).
+  // Header thuộc cột nội dung nên không bao giờ che sidebar.
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen md:flex">
       <AppSidebar />
-      <div className={`flex-1 ${SIDEBAR_CLASSES.contentPush}`}>
+      <div className="min-w-0 flex-1">
         <AppHeader />
         <div className="p-3 md:p-4">{children}</div>
       </div>

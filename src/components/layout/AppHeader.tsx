@@ -10,14 +10,12 @@ import React, { useState, useEffect, useRef } from "react";
 const AppHeader: React.FC = () => {
   const [isApplicationMenuOpen, setApplicationMenuOpen] = useState(false);
 
-  const { isMobileOpen, toggleSubmenuPanel, toggleMobileSidebar } = useSidebar();
+  const { isMobileOpen, toggleMobileSidebar } = useSidebar();
 
+  // Nút mở/đóng panel sidebar đã chuyển xuống ĐÁY RAIL (AppSidebar).
+  // Header chỉ còn hamburger cho drawer mobile.
   const handleToggle = () => {
-    if (window.innerWidth >= 768) {
-      toggleSubmenuPanel();
-    } else {
-      toggleMobileSidebar();
-    }
+    toggleMobileSidebar();
   };
 
   const toggleApplicationMenu = () => {
