@@ -70,3 +70,12 @@ Yêu cầu: rail to hơn + có chữ dưới icon; BỎ hover-expand; bấm sect
 - `AppSidebar`: bỏ `isHovered`; nút đáy rail (AngleLeft/Right icon — file SVG cũ rỗng 0 byte, đã viết lại); panel hiển thị tiêu đề section + menu con, active theo route.
 - `SidebarContext`: `isExpanded` → `isSubmenuOpen` (panel), `toggleSidebar` → `toggleSubmenuPanel`; xóa `Backdrop.tsx` (đã có backdrop nội bộ cho mobile drawer).
 - Verify: lint 0, format OK, build ✓, 6/6 routes 200, class render đúng `w-20`/`md:ml-20`.
+
+## 2026-09-11 — Sidebar trong flow, push nội dung (commit 4961509)
+
+Yêu cầu: panel mở thì ĐẨY trang vào (không đè); nút mở/đóng chuyển từ header xuống đáy rail + đổi màu theo trạng thái; panel phụ rộng hơn (w-64→w-72); tách sidebar/header để không che nhau.
+
+- `app/(admin)/layout`: `md:flex` — sidebar (rail+panel) là cột flex riêng, header+content cột còn lại → panel mở animate `width 0↔288px` đẩy nội dung, không còn fixed/overlay → header không thể che sidebar. Sidebar `sticky top-0` nguyên chiều cao.
+- `AppHeader`: bỏ toggle desktop (đã chuyển xuống đáy rail); hamburger chỉ còn cho mobile drawer.
+- `AppSidebar`: nút đáy rail `bg-brand-500` khi mở / xám khi đóng; state `selectedSection` nâng lên Context (giữ vị trí section giữa header/rail); panel `w-0 overflow-hidden ↔ w-72 overflow-y-auto`.
+- Verify: lint 0, format OK, build ✓, 5/5 routes 200, HTML render đúng `md:flex` + `sticky ... md:flex`.
