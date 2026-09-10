@@ -60,3 +60,13 @@ Yêu cầu: rail thu gọn không bao giờ tự to; hover mới bung; chỉ th�
 - `AdminLayout`: bỏ `max-w-(--breakpoint-2xl)` + padding 12-16px → nội dung chiếm gần trọn chiều rộng (chỉ trừ 64px rail); push `md:ml-16` ↔ `md:ml-60` khi pin; hover không đổi margin.
 - `AppHeader`: toggle breakpoint lg→md khớp rail mới.
 - Verify: lint 0, format pass, build ✓, smoke `/` + `/calendar` + `/signin` HTTP 200; class render đúng `w-16`/`md:ml-16`.
+
+## 2026-09-10 (2) — Sidebar model mới theo ảnh tham chiếu (commit 4f87ada)
+
+Yêu cầu: rail to hơn + có chữ dưới icon; BỎ hover-expand; bấm section cha → panel rộng hiện CẠNH rail; nút mở rộng xuống đáy rail (luôn ở đó, không cuộn theo icon); rail cuộn khi quá nhiều icon.
+
+- `SIDEBAR_CLASSES`: rail `w-20` (80px), panel `w-64 left-20` overlay — nội dung `md:ml-20` không đổi khi mở panel.
+- `nav-items.tsx`: chuyển `mainNavItems/othersNavItems` → `navSections` (mỗi section = tile icon+nhãn; có `path` → link thẳng, có `items` → mở panel).
+- `AppSidebar`: bỏ `isHovered`; nút đáy rail (AngleLeft/Right icon — file SVG cũ rỗng 0 byte, đã viết lại); panel hiển thị tiêu đề section + menu con, active theo route.
+- `SidebarContext`: `isExpanded` → `isSubmenuOpen` (panel), `toggleSidebar` → `toggleSubmenuPanel`; xóa `Backdrop.tsx` (đã có backdrop nội bộ cho mobile drawer).
+- Verify: lint 0, format OK, build ✓, 6/6 routes 200, class render đúng `w-20`/`md:ml-20`.
