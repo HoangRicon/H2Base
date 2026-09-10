@@ -86,7 +86,8 @@ const AppSidebar: React.FC = () => {
         </Link>
       </div>
 
-      <nav className="no-scrollbar flex-1 overflow-x-hidden overflow-y-auto px-2 pb-3">
+      {/* Nhiều icon → cuộn với scrollbar mềm của hệ thống (tránh dùng no-scrollbar) */}
+      <nav className="flex-1 overflow-x-hidden overflow-y-auto px-2 pb-3">
         <ul className="flex flex-col gap-1">
           {navSections.map((section, index) => {
             const active = isSectionActive(section);
