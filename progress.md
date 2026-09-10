@@ -87,3 +87,10 @@ Clarify: user muốn CHÍNH cái nút hamburger cạnh ô search trên header đ
 - `AppSidebar`: nút đáy rail dùng lại SVG gốc của header — hamburger 3 gạch khi đóng, dấu X khi mở; nút bo góc có viền; khi MỞ đổi màu brand (viền + nền xanh nhạt) / khi ĐÓNG xám viền thường.
 - `AppHeader`: hamburger thành `md:hidden` (chỉ mobile drawer), desktop nút nằm ở đáy rail.
 - Verify: lint 0, build ✓, smoke 3/3 routes 200 + aria/title render đúng.
+
+## 2026-09-11 (3) — Scrollbar mềm toàn hệ thống (commit 1f340b7)
+
+- `globals.css @layer base`: đặt style cho MỌI phần tử cuộn (không cần class): mỏng 10px, thumb bo tròn pill trong mờ (xám 35% alpha / dark 28%), track trong suốt, `transition` màu + độ dày khi hover, `scroll-behavior: smooth`, `scrollbar-width: thin` cho Firefox.
+- `custom-scrollbar` cũ (size-1.5 cứng) Nay kế thừa style toàn cục; `no-scrollbar` giữ nguyên cho nơi muốn ẩn hẳn.
+- Rail sidebar: bỏ `no-scrollbar` → icon nhiều hiện scrollbar mềm đúng yêu cầu.
+- Verify: build ✓, CSS compile chứa `scrollbar-color` + webkit thumb rgba trong output `.next`, lint 0.
