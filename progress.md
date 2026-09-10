@@ -79,3 +79,11 @@ Yêu cầu: panel mở thì ĐẨY trang vào (không đè); nút mở/đóng ch
 - `AppHeader`: bỏ toggle desktop (đã chuyển xuống đáy rail); hamburger chỉ còn cho mobile drawer.
 - `AppSidebar`: nút đáy rail `bg-brand-500` khi mở / xám khi đóng; state `selectedSection` nâng lên Context (giữ vị trí section giữa header/rail); panel `w-0 overflow-hidden ↔ w-72 overflow-y-auto`.
 - Verify: lint 0, format OK, build ✓, 5/5 routes 200, HTML render đúng `md:flex` + `sticky ... md:flex`.
+
+## 2026-09-11 (2) — Nút đáy rail giống nút header (commit 5a24e62)
+
+Clarify: user muốn CHÍNH cái nút hamburger cạnh ô search trên header được chuyển xuống đáy rail (không phải icon mũi tên tự chế).
+
+- `AppSidebar`: nút đáy rail dùng lại SVG gốc của header — hamburger 3 gạch khi đóng, dấu X khi mở; nút bo góc có viền; khi MỞ đổi màu brand (viền + nền xanh nhạt) / khi ĐÓNG xám viền thường.
+- `AppHeader`: hamburger thành `md:hidden` (chỉ mobile drawer), desktop nút nằm ở đáy rail.
+- Verify: lint 0, build ✓, smoke 3/3 routes 200 + aria/title render đúng.
