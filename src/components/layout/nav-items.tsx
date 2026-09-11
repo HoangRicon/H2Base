@@ -2,7 +2,14 @@
 
 import React from "react";
 import {
+  AlertIcon,
   BoxCubeIcon,
+  BoxIcon,
+  CheckCircleIcon,
+  DollarLineIcon,
+  BoltIcon,
+  CalenderIcon,
+  DocsIcon,
   FileIcon,
   GridIcon,
   ListIcon,
@@ -11,10 +18,17 @@ import {
   PieChartIcon,
   TableIcon,
   UserCircleIcon,
+  UserIcon,
   VideoIcon,
 } from "@/icons";
 
-export type SubMenuItem = { name: string; path: string; pro?: boolean; new?: boolean };
+export type SubMenuItem = {
+  name: string;
+  path: string;
+  icon?: React.ReactNode;
+  pro?: boolean;
+  new?: boolean;
+};
 
 export type NavSection = {
   /** Tên nhóm — hiển thị dưới icon ở rail + làm chú thích khi hover. */
@@ -38,9 +52,9 @@ export const navSections: NavSection[] = [
     icon: <GridIcon />,
     path: "/",
     items: [
-      { name: "Ecommerce", path: "/", pro: false },
-      { name: "Blank", path: "/blank", pro: false },
-      { name: "Calendar", path: "/calendar", pro: false },
+      { name: "Ecommerce", path: "/", icon: <DollarLineIcon />, pro: false },
+      { name: "Blank", path: "/blank", icon: <FileIcon />, pro: false },
+      { name: "Calendar", path: "/calendar", icon: <CalenderIcon />, pro: false },
     ],
   },
   { name: "Users", icon: <UserCircleIcon />, path: "/profile" },
@@ -49,8 +63,8 @@ export const navSections: NavSection[] = [
     icon: <PieChartIcon />,
     path: "/line-chart",
     items: [
-      { name: "Line Chart", path: "/line-chart", pro: false },
-      { name: "Bar Chart", path: "/bar-chart", pro: false },
+      { name: "Line Chart", path: "/line-chart", icon: <GridIcon />, pro: false },
+      { name: "Bar Chart", path: "/bar-chart", icon: <PieChartIcon />, pro: false },
     ],
   },
   {
@@ -58,12 +72,12 @@ export const navSections: NavSection[] = [
     icon: <BoxCubeIcon />,
     path: "/alerts",
     items: [
-      { name: "Alerts", path: "/alerts", pro: false },
-      { name: "Avatars", path: "/avatars", pro: false },
-      { name: "Badge", path: "/badge", pro: false },
-      { name: "Buttons", path: "/buttons", pro: false },
-      { name: "Images", path: "/images", pro: false },
-      { name: "Modals", path: "/modals", pro: false },
+      { name: "Alerts", path: "/alerts", icon: <AlertIcon />, pro: false },
+      { name: "Avatars", path: "/avatars", icon: <UserIcon />, pro: false },
+      { name: "Badge", path: "/badge", icon: <CheckCircleIcon />, pro: false },
+      { name: "Buttons", path: "/buttons", icon: <BoltIcon />, pro: false },
+      { name: "Images", path: "/images", icon: <BoxIcon />, pro: false },
+      { name: "Modals", path: "/modals", icon: <DocsIcon />, pro: false },
     ],
   },
   { name: "Forms", icon: <ListIcon />, path: "/form-elements" },
@@ -74,8 +88,8 @@ export const navSections: NavSection[] = [
     icon: <LockIcon />,
     path: "/signin",
     items: [
-      { name: "Sign In", path: "/signin", pro: false },
-      { name: "Sign Up", path: "/signup", pro: false },
+      { name: "Sign In", path: "/signin", icon: <LockIcon />, pro: false },
+      { name: "Sign Up", path: "/signup", icon: <UserCircleIcon />, pro: false },
     ],
   },
   { name: "Media", icon: <VideoIcon />, path: "/videos" },

@@ -89,7 +89,7 @@ const AppSidebar: React.FC = () => {
                     className={
                       active
                         ? "text-brand-500 dark:text-brand-400"
-                        : "text-gray-500 dark:text-gray-400"
+                        : "text-gray-700 dark:text-gray-200"
                     }
                   >
                     {section.icon}
@@ -98,7 +98,7 @@ const AppSidebar: React.FC = () => {
                     className={`text-center text-xs leading-tight ${
                       active
                         ? "text-brand-500 dark:text-brand-400 font-semibold"
-                        : "text-gray-500 dark:text-gray-400"
+                        : "font-medium text-gray-700 dark:text-gray-200"
                     }`}
                   >
                     {section.name}
@@ -121,8 +121,8 @@ const AppSidebar: React.FC = () => {
           title={showPanel ? "Đóng panel" : "Mở panel"}
           className={`flex h-10 w-10 cursor-pointer items-center justify-center rounded-xl transition-all duration-200 ${
             showPanel
-              ? "bg-brand-500 shadow-brand-500/40 dark:bg-brand-500 text-white shadow-lg dark:text-white"
-              : "text-gray-400 hover:bg-gray-100 hover:text-gray-700 dark:hover:bg-white/10 dark:hover:text-gray-200"
+              ? "bg-gray-100 text-gray-600 shadow-inner dark:bg-white/5 dark:text-gray-300"
+              : "text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/10 dark:hover:text-gray-200"
           }`}
         >
           <svg
@@ -146,15 +146,15 @@ const AppSidebar: React.FC = () => {
 
   return (
     <>
-      {/* Tooltip FIXED — render ở gốc component, nổi trên mọi layer, không bị rail/nội dung che */}
+      {/* Tooltip FIXED — nền trắng chữ đen (light), invert trong dark; nổi trên mọi layer */}
       {tooltip && (
         <span
           role="tooltip"
-          className="pointer-events-none fixed z-[100] hidden -translate-y-1/2 rounded-lg bg-gray-900 px-2.5 py-1.5 text-xs font-medium whitespace-nowrap text-white shadow-lg md:block dark:bg-gray-700"
+          className="pointer-events-none fixed z-[100] hidden -translate-y-1/2 rounded-lg border border-gray-200 bg-white px-2.5 py-1.5 text-xs font-medium whitespace-nowrap text-gray-900 shadow-lg md:block dark:border-gray-700 dark:bg-gray-800 dark:text-white/90"
           style={{ left: tooltip.x, top: tooltip.y }}
         >
           {tooltip.name}
-          <span className="absolute top-1/2 -left-1 -mt-1 h-2 w-2 rotate-45 rounded-[2px] bg-gray-900 dark:bg-gray-700" />
+          <span className="absolute top-1/2 -left-[5px] -mt-[5px] h-2.5 w-2.5 rotate-45 rounded-[2px] border-b border-l border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800" />
         </span>
       )}
 
@@ -190,6 +190,17 @@ const AppSidebar: React.FC = () => {
                         active ? "menu-dropdown-item-active" : "menu-dropdown-item-inactive"
                       }`}
                     >
+                      {item.icon && (
+                        <span
+                          className={
+                            active
+                              ? "text-brand-500 dark:text-brand-400"
+                              : "text-gray-500 dark:text-gray-400"
+                          }
+                        >
+                          {item.icon}
+                        </span>
+                      )}
                       {item.name}
                       {item.new && (
                         <span className="menu-dropdown-badge menu-dropdown-badge-active ml-auto">
