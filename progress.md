@@ -135,3 +135,8 @@ Clarify: user KHÔNG muốn phẳng hóa hết ra rail; muốn giữ rail sideba
 - Bấm tile nhóm lẻ khi panel đang mở → `closeSubmenuPanel()` (thêm vào context); nhóm có items → đổi section trong panel.
 - Nút đáy rail disabled khi section hiện tại không có items; màu/icon trạng thái dùng `showPanel`.
 - Verify: lint 0, build ✓, format pass.
+
+## 2026-09-11 (10) — Bấm nhóm có con tự mở panel
+
+- Context thêm `openSubmenuPanel()`; tile section có items → `openSubmenuPanel()` khi bấm (trước chỉ đổi section, panel giữ nguyên trạng thái); section không con vẫn đóng panel.
+- Verify: lint 0, build ✓, format pass.
