@@ -24,6 +24,7 @@ const AppSidebar: React.FC = () => {
     isSubmenuOpen,
     selectedSection,
     toggleSubmenuPanel,
+    closeSubmenuPanel,
     setSelectedSection,
     toggleMobileSidebar,
   } = useSidebar();
@@ -32,10 +33,12 @@ const AppSidebar: React.FC = () => {
   const isSectionActive = (section: NavSection) =>
     section.path === pathname || (section.items?.some((item) => item.path === pathname) ?? false);
 
-  // Section hiển thị trong panel: user bấm gần nhất, ngược lại theo route hiện tại.
+  // Section hiện thị trong panel: user bấm gần nhất, ngược lại theo route hiện tại.
   const routeIdx = navSections.findIndex((s) => isSectionActive(s));
   const panelIndex = selectedSection ?? (routeIdx >= 0 ? routeIdx : 0);
   const panelSection = navSections[panelIndex];
+  // Nhóm không có trang con → KHÔNG hiện panel railsidebar (đóng nếu đang mở).
+  const showPanel = isSubmenuOpen && !!panelSection?.items?.length;
 
   const closeMobileDrawer = () => {
     if (window.innerWidth < 768 && isMobileOpen) toggleMobileSidebar();
@@ -67,8 +70,10 @@ const AppSidebar: React.FC = () => {
                   href={section.path}
                   aria-label={section.name}
                   onClick={() => {
-                    // Bấm icon: vào thẳng trang chính + panel (nếu đang mở) đổi sang nhóm này
+                    // Bấm icon: vào thẳng trang chính + panel (nếu đang mở) đổi sang nhóm này.
+                    // Nhóm không có trang con → đóng hẳn panel railsidebar.
                     setSelectedSection(index);
+                    if (!section.items?.length) closeSubmenuPanel();
                     closeMobileDrawer();
                   }}
                   onMouseEnter={(e) => showTooltip(e, section.name)}
@@ -107,12 +112,12 @@ const AppSidebar: React.FC = () => {
       <div className="hidden shrink-0 justify-center border-t border-gray-100 px-2 py-3 md:flex dark:border-gray-800">
         <button
           type="button"
-          onClick={toggleSubmenuPanel}
-          aria-expanded={isSubmenuOpen}
-          aria-label={isSubmenuOpen ? "Đóng panel" : "Mở panel"}
-          title={isSubmenuOpen ? "Đóng panel" : "Mở panel"}
+          onClick={() => panelSection?.items?.length && toggleSubmenuPanel()}
+          aria-expanded={showPanel}
+          aria-label={showPanel ? "Đóng panel" : "Mở panel"}
+          title={showPanel ? "Đóng panel" : "Mở panel"}
           className={`flex h-10 w-10 cursor-pointer items-center justify-center rounded-xl transition-all duration-200 ${
-            isSubmenuOpen
+            showPanel
               ? "bg-brand-500 shadow-brand-500/40 dark:bg-brand-500 text-white shadow-lg dark:text-white"
               : "text-gray-400 hover:bg-gray-100 hover:text-gray-700 dark:hover:bg-white/10 dark:hover:text-gray-200"
           }`}
@@ -162,7 +167,7 @@ const AppSidebar: React.FC = () => {
             (vd bấm Báo cáo → chỉ nhóm báo cáo, không lai các nhóm khác) */}
         <div
           className={`h-full bg-white transition-[width] duration-300 ease-in-out dark:bg-gray-900 ${
-            isSubmenuOpen
+            showPanel
               ? `${SIDEBAR_CLASSES.panelWidth} overflow-y-auto border-r border-gray-200 dark:border-gray-800`
               : "w-0 overflow-hidden"
           }`}
@@ -171,39 +176,33 @@ const AppSidebar: React.FC = () => {
             <h2 className="mb-2 px-2 text-sm font-semibold tracking-wide text-gray-700 dark:text-gray-300">
               {panelSection?.name}
             </h2>
-            {panelSection?.items?.length ? (
-              <ul className="flex flex-col gap-0.5">
-                {panelSection.items.map((item) => {
-                  const active = item.path === pathname;
-                  return (
-                    <li key={`${panelSection.name}-${item.name}`}>
-                      <Link
-                        href={item.path}
-                        className={`menu-dropdown-item ${
-                          active ? "menu-dropdown-item-active" : "menu-dropdown-item-inactive"
-                        }`}
-                      >
-                        {item.name}
-                        {item.new && (
-                          <span className="menu-dropdown-badge menu-dropdown-badge-active ml-auto">
-                            new
-                          </span>
-                        )}
-                        {item.pro && (
-                          <span className="menu-dropdown-badge menu-dropdown-badge-inactive ml-auto">
-                            pro
-                          </span>
-                        )}
-                      </Link>
-                    </li>
-                  );
-                })}
-              </ul>
-            ) : (
-              <p className="px-2 text-sm text-gray-400 dark:text-gray-500">
-                Mục này không có trang con.
-              </p>
-            )}
+            <ul className="flex flex-col gap-0.5">
+              {panelSection?.items?.map((item) => {
+                const active = item.path === pathname;
+                return (
+                  <li key={`${panelSection.name}-${item.name}`}>
+                    <Link
+                      href={item.path}
+                      className={`menu-dropdown-item ${
+                        active ? "menu-dropdown-item-active" : "menu-dropdown-item-inactive"
+                      }`}
+                    >
+                      {item.name}
+                      {item.new && (
+                        <span className="menu-dropdown-badge menu-dropdown-badge-active ml-auto">
+                          new
+                        </span>
+                      )}
+                      {item.pro && (
+                        <span className="menu-dropdown-badge menu-dropdown-badge-inactive ml-auto">
+                          pro
+                        </span>
+                      )}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
           </div>
         </div>
       </div>

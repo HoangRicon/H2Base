@@ -8,6 +8,7 @@ type SidebarContextType = {
   /** Index section user bấm gần nhất trên rail; null = derive theo route hiện tại. */
   selectedSection: number | null;
   toggleSubmenuPanel: () => void;
+  closeSubmenuPanel: () => void;
   setSelectedSection: (index: number) => void;
   toggleMobileSidebar: () => void;
 };
@@ -38,6 +39,7 @@ export const SidebarProvider: React.FC<{ children: React.ReactNode }> = ({ child
   }, []);
 
   const toggleSubmenuPanel = () => setIsSubmenuOpen((prev) => !prev);
+  const closeSubmenuPanel = () => setIsSubmenuOpen(false);
   const toggleMobileSidebar = () => setIsMobileOpen((prev) => !prev);
 
   return (
@@ -47,6 +49,7 @@ export const SidebarProvider: React.FC<{ children: React.ReactNode }> = ({ child
         isMobileOpen,
         selectedSection,
         toggleSubmenuPanel,
+        closeSubmenuPanel,
         setSelectedSection,
         toggleMobileSidebar,
       }}
