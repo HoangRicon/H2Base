@@ -5,9 +5,8 @@ import Link from "next/link";
 import React from "react";
 
 export const metadata: Metadata = {
-  title: "Next.js Error 404 | TailAdmin - Next.js Dashboard Template",
-  description:
-    "This is Next.js Error 404 page for TailAdmin - Next.js Tailwind CSS Admin Dashboard Template",
+  title: "Error 404 | Hoàng Hà Digital",
+  description: "Trang Error 404 page forHoàng Hà Digital",
 };
 
 export default function Error404() {
@@ -47,7 +46,7 @@ export default function Error404() {
       </div>
       {/* <!-- Footer --> */}
       <p className="absolute bottom-6 left-1/2 -translate-x-1/2 text-center text-sm text-gray-500 dark:text-gray-400">
-        &copy; {new Date().getFullYear()} - TailAdmin
+        &copy; {new Date().getFullYear()} - Hoàng Hà Digital
       </p>
     </div>
   );

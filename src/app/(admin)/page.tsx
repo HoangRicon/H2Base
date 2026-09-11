@@ -8,8 +8,8 @@ import RecentOrders from "@/features/dashboard/RecentOrders";
 import DemographicCard from "@/features/dashboard/DemographicCard";
 
 export const metadata: Metadata = {
-  title: "Next.js E-commerce Dashboard | TailAdmin - Next.js Dashboard Template",
-  description: "This is Next.js Home for TailAdmin Dashboard Template",
+  title: "E-commerce Dashboard | Hoàng Hà Digital",
+  description: "Trang Home của Hoàng Hà Digital",
 };
 
 export default function Ecommerce() {
