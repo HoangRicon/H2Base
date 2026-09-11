@@ -19,11 +19,23 @@ type TooltipState = { name: string; x: number; y: number } | null;
  * - Mobile: drawer + hamburger header.
  */
 const AppSidebar: React.FC = () => {
-  const { isMobileOpen, isSubmenuOpen, toggleSubmenuPanel, toggleMobileSidebar } = useSidebar();
+  const {
+    isMobileOpen,
+    isSubmenuOpen,
+    selectedSection,
+    toggleSubmenuPanel,
+    setSelectedSection,
+    toggleMobileSidebar,
+  } = useSidebar();
   const pathname = usePathname();
 
   const isSectionActive = (section: NavSection) =>
     section.path === pathname || (section.items?.some((item) => item.path === pathname) ?? false);
+
+  // Section hiển thị trong panel: user bấm gần nhất, ngược lại theo route hiện tại.
+  const routeIdx = navSections.findIndex((s) => isSectionActive(s));
+  const panelIndex = selectedSection ?? (routeIdx >= 0 ? routeIdx : 0);
+  const panelSection = navSections[panelIndex];
 
   const closeMobileDrawer = () => {
     if (window.innerWidth < 768 && isMobileOpen) toggleMobileSidebar();
@@ -47,14 +59,18 @@ const AppSidebar: React.FC = () => {
       {/* no-scrollbar: ẩn thanh trượt khi nhiều icon, vẫn cuộn bằng wheel/trackpad */}
       <nav className="no-scrollbar flex-1 overflow-x-clip overflow-y-auto px-2 pt-4 pb-3">
         <ul className="flex flex-col gap-1">
-          {navSections.map((section) => {
+          {navSections.map((section, index) => {
             const active = isSectionActive(section);
             return (
               <li key={section.name} className="group relative">
                 <Link
                   href={section.path}
                   aria-label={section.name}
-                  onClick={closeMobileDrawer}
+                  onClick={() => {
+                    // Bấm icon: vào thẳng trang chính + panel (nếu đang mở) đổi sang nhóm này
+                    setSelectedSection(index);
+                    closeMobileDrawer();
+                  }}
                   onMouseEnter={(e) => showTooltip(e, section.name)}
                   onMouseLeave={() => setTooltip(null)}
                   onFocus={(e) => showTooltip(e, section.name)}
@@ -142,7 +158,8 @@ const AppSidebar: React.FC = () => {
           {railInner}
         </aside>
 
-        {/* Panel: toàn bộ cây menu — chọn trang chi tiết tại đây */}
+        {/* Panel: CHỈ hiện các trang con của section đang chọn trên rail
+            (vd bấm Báo cáo → chỉ nhóm báo cáo, không lai các nhóm khác) */}
         <div
           className={`h-full bg-white transition-[width] duration-300 ease-in-out dark:bg-gray-900 ${
             isSubmenuOpen
@@ -151,42 +168,41 @@ const AppSidebar: React.FC = () => {
           }`}
         >
           <div className={`px-3 py-4 ${SIDEBAR_CLASSES.panelWidth}`}>
-            {navSections.map(
-              (section) =>
-                section.items?.length && (
-                  <div key={section.name} className="mb-4">
-                    <h2 className="mb-1 px-2 text-xs font-semibold tracking-wide text-gray-400 uppercase dark:text-gray-500">
-                      {section.name}
-                    </h2>
-                    <ul className="flex flex-col gap-0.5">
-                      {section.items.map((item) => {
-                        const active = item.path === pathname;
-                        return (
-                          <li key={`${section.name}-${item.name}`}>
-                            <Link
-                              href={item.path}
-                              className={`menu-dropdown-item ${
-                                active ? "menu-dropdown-item-active" : "menu-dropdown-item-inactive"
-                              }`}
-                            >
-                              {item.name}
-                              {item.new && (
-                                <span className="menu-dropdown-badge menu-dropdown-badge-active ml-auto">
-                                  new
-                                </span>
-                              )}
-                              {item.pro && (
-                                <span className="menu-dropdown-badge menu-dropdown-badge-inactive ml-auto">
-                                  pro
-                                </span>
-                              )}
-                            </Link>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </div>
-                ),
+            <h2 className="mb-2 px-2 text-sm font-semibold tracking-wide text-gray-700 dark:text-gray-300">
+              {panelSection?.name}
+            </h2>
+            {panelSection?.items?.length ? (
+              <ul className="flex flex-col gap-0.5">
+                {panelSection.items.map((item) => {
+                  const active = item.path === pathname;
+                  return (
+                    <li key={`${panelSection.name}-${item.name}`}>
+                      <Link
+                        href={item.path}
+                        className={`menu-dropdown-item ${
+                          active ? "menu-dropdown-item-active" : "menu-dropdown-item-inactive"
+                        }`}
+                      >
+                        {item.name}
+                        {item.new && (
+                          <span className="menu-dropdown-badge menu-dropdown-badge-active ml-auto">
+                            new
+                          </span>
+                        )}
+                        {item.pro && (
+                          <span className="menu-dropdown-badge menu-dropdown-badge-inactive ml-auto">
+                            pro
+                          </span>
+                        )}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : (
+              <p className="px-2 text-sm text-gray-400 dark:text-gray-500">
+                Mục này không có trang con.
+              </p>
             )}
           </div>
         </div>
