@@ -148,3 +148,8 @@ Clarify: user KHÔNG muốn phẳng hóa hết ra rail; muốn giữ rail sideba
 - Icon + nhãn rail không active: `gray-500` → `gray-700` (dark `gray-200`), nhãn thêm `font-medium`.
 - `SubMenuItem.icon?: ReactNode` — gán icon cho 13 item con trong data; panel render icon trước tên, active → màu brand.
 - Verify: lint 0, build ✓, format pass.
+
+## 2026-09-11 (12) — Nút mở/đóng vuông + icon đổi màu (commit 839c793)
+
+- Bỏ `rounded-xl` → nút vuông vức.
+- Khi mở: icon brand-500 + nền xám shadow-inner; khi đóng: icon brand-500 khi hover.
