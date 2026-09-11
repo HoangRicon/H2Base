@@ -140,3 +140,11 @@ Clarify: user KHÔNG muốn phẳng hóa hết ra rail; muốn giữ rail sideba
 
 - Context thêm `openSubmenuPanel()`; tile section có items → `openSubmenuPanel()` khi bấm (trước chỉ đổi section, panel giữ nguyên trạng thái); section không con vẫn đóng panel.
 - Verify: lint 0, build ✓, format pass.
+
+## 2026-09-11 (11) — Chỉnh tinh thần sidebar 4 điểm (commit tiếp 7699fc4)
+
+- Nút đáy rail khi MỞ: nền xám nhạt + `shadow-inner` (chìm, trung tính) thay vì brand nổi; icon giữ nguyên hamburger.
+- Tooltip: nền trắng chữ đen + viền nhạt + mũi tên cùng nền (light mode); dark mode đảo sang xám tối.
+- Icon + nhãn rail không active: `gray-500` → `gray-700` (dark `gray-200`), nhãn thêm `font-medium`.
+- `SubMenuItem.icon?: ReactNode` — gán icon cho 13 item con trong data; panel render icon trước tên, active → màu brand.
+- Verify: lint 0, build ✓, format pass.
