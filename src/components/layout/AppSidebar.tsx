@@ -2,7 +2,6 @@
 
 import React from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useSidebar } from "@/context/SidebarContext";
 import { SIDEBAR_CLASSES } from "@/lib/constants";
@@ -77,17 +76,11 @@ const AppSidebar: React.FC = () => {
         : "text-gray-500 dark:text-gray-400"
     }`;
 
-  // Nội dung dùng chung cho rail desktop lẫn drawer mobile.
+  // Nội dung dùng chung cho rail desktop lẫn drawer mobile (logo đã chuyển lên header).
   const railInner = (
     <>
-      <div className="flex shrink-0 justify-center py-4">
-        <Link href="/">
-          <Image src="/images/logo/logo-icon.svg" alt="Logo" width={36} height={36} />
-        </Link>
-      </div>
-
       {/* Nhiều icon → cuộn với scrollbar mềm của hệ thống (tránh dùng no-scrollbar) */}
-      <nav className="flex-1 overflow-x-hidden overflow-y-auto px-2 pb-3">
+      <nav className="flex-1 overflow-x-hidden overflow-y-auto px-2 pt-4 pb-3">
         <ul className="flex flex-col gap-1">
           {navSections.map((section, index) => {
             const active = isSectionActive(section);
