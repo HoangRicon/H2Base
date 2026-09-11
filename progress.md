@@ -106,3 +106,9 @@ Clarify: user muốn CHÍNH cái nút hamburger cạnh ô search trên header đ
 
 - Bỏ khối logo ở đỉnh rail `AppSidebar` (nav bắt đầu từ `pt-4`); header render full logo `logo.svg` trên MỌI breakpoint (bỏ `lg:hidden`).
 - Smoke: `logo.svg` có trong header, `logo-icon.svg` = 0 lần trong page.
+
+## 2026-09-11 (6) — Rail w-22 + nút thu gọn style mới
+
+- `SIDEBAR_CLASSES.railWidth`: `w-24` → `w-22` (88px).
+- Nút đáy rail: bỏ toggle icon X, luôn dùng icon hamburger; mở = `text-brand-500` + `shadow-[0_0_0_4px_rgba(70,95,255,0.18)]` (không border), đóng = xám + hover nền nhạt.
+- Verify: lint 0, build ✓, `.w-22` có trong compiled CSS.
