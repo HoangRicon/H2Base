@@ -153,3 +153,10 @@ Clarify: user KHÔNG muốn phẳng hóa hết ra rail; muốn giữ rail sideba
 
 - Bỏ `rounded-xl` → nút vuông vức.
 - Khi mở: icon brand-500 + nền xám shadow-inner; khi đóng: icon brand-500 khi hover.
+
+## 2026-09-11 (13) — Rebrand Hoàng Hà Digital (commit c66227b)
+
+- 4 file logo SVG (logo, logo-dark, logo-icon, auth-logo): vẽ mới — ô vuông bo góc xanh #465FFF chữ "H2" + chữ "Hoàng Hà Digital" (dark/auth nền tối đổi màu chữ tương ứng); header width 154→192 + alt mới; caption auth trang trí đổi thành "Giải pháp quản trị số cho doanh nghiệp".
+- Favicon: thêm `src/app/icon.svg` (H2), xóa `favicon.ico` cũ của TailAdmin.
+- Metadata: 18 file page — title "* | Hoàng Hà Digital", bỏ prefix "Next.js"; 7 file copyright "© … - Hoàng Hà Digital"; `grep tailadmin` trong src = 0 kết quả.
+- Verify: lint 0, build ✓, smoke `/` title "E-commerce Dashboard | Hoàng Hà Digital", `/icon.svg` 200.
