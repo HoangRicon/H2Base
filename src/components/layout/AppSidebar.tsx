@@ -135,7 +135,7 @@ const AppSidebar: React.FC = () => {
           title={isSubmenuOpen ? "Đóng menu" : "Mở menu"}
           className={`flex h-10 w-10 cursor-pointer items-center justify-center rounded-xl transition-all duration-200 ${
             isSubmenuOpen
-              ? "text-brand-500 dark:text-brand-400 shadow-[0_0_0_4px_rgba(70,95,255,0.18)]"
+              ? "bg-brand-500 shadow-brand-500/40 dark:bg-brand-500 text-white shadow-lg dark:text-white"
               : "text-gray-400 hover:bg-gray-100 hover:text-gray-700 dark:hover:bg-white/10 dark:hover:text-gray-200"
           }`}
         >
