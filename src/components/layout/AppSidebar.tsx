@@ -24,6 +24,7 @@ const AppSidebar: React.FC = () => {
     isSubmenuOpen,
     selectedSection,
     toggleSubmenuPanel,
+    openSubmenuPanel,
     closeSubmenuPanel,
     setSelectedSection,
     toggleMobileSidebar,
@@ -70,10 +71,12 @@ const AppSidebar: React.FC = () => {
                   href={section.path}
                   aria-label={section.name}
                   onClick={() => {
-                    // Bấm icon: vào thẳng trang chính + panel (nếu đang mở) đổi sang nhóm này.
-                    // Nhóm không có trang con → đóng hẳn panel railsidebar.
+                    // Bấm icon: vào thẳng trang chính.
+                    // Nhóm CÓ trang con → panel railsidebar TỰ MỞ và đổi sang nhóm đó.
+                    // Nhóm không có trang con → đóng panel railsidebar.
                     setSelectedSection(index);
-                    if (!section.items?.length) closeSubmenuPanel();
+                    if (section.items?.length) openSubmenuPanel();
+                    else closeSubmenuPanel();
                     closeMobileDrawer();
                   }}
                   onMouseEnter={(e) => showTooltip(e, section.name)}
