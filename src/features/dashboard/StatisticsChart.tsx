@@ -46,7 +46,7 @@ export default function StatisticsChart() {
     },
     colors: ["#465FFF", "#9CB9FF"], // Define line colors
     chart: {
-      fontFamily: "Outfit, sans-serif",
+      fontFamily: "Be Vietnam Pro, sans-serif",
       height: 310,
       type: "line", // Set the chart type to 'line'
       toolbar: {

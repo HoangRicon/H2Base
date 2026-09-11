@@ -4,7 +4,7 @@
 
 @theme {
   --font-*: initial;
-  --font-outfit: Outfit, sans-serif;
+  --font-sans: var(--font-be-vietnam), "Be Vietnam Pro", sans-serif;
 
   --breakpoint-*: initial;
   --breakpoint-2xsm: 375px;
@@ -181,7 +181,7 @@
     cursor: pointer;
   }
   body {
-    @apply font-outfit relative z-1 bg-gray-50 font-normal;
+    @apply relative z-1 bg-gray-50 font-sans font-normal;
   }
 }
 
