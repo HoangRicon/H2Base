@@ -67,11 +67,11 @@ const AppSidebar: React.FC = () => {
   };
 
   const tileClass = (active: boolean) =>
-    `flex h-[68px] w-full cursor-pointer flex-col items-center justify-center gap-1 rounded-lg px-1 transition-colors ${
+    `flex h-[72px] w-full cursor-pointer flex-col items-center justify-center gap-1.5 rounded-lg px-1 transition-colors ${
       active ? "bg-brand-50 dark:bg-brand-500/[0.12]" : "hover:bg-gray-100 dark:hover:bg-white/5"
     }`;
   const labelClass = (active: boolean) =>
-    `text-center text-[10px] leading-tight ${
+    `text-center text-xs leading-tight ${
       active
         ? "font-semibold text-brand-500 dark:text-brand-400"
         : "text-gray-500 dark:text-gray-400"
@@ -187,15 +187,15 @@ const AppSidebar: React.FC = () => {
   return (
     <>
       {/* ===== Desktop: rail + panel trong flow — panel mở thì PUSH nội dung ===== */}
-      <div className="sticky top-0 hidden h-screen shrink-0 md:flex">
+      <div className="hidden shrink-0 self-stretch md:flex">
         <aside
-          className={`flex h-screen flex-col border-r border-gray-200 bg-white text-gray-900 dark:border-gray-800 dark:bg-gray-900 ${SIDEBAR_CLASSES.railWidth}`}
+          className={`flex h-full flex-col border-r border-gray-200 bg-white text-gray-900 dark:border-gray-800 dark:bg-gray-900 ${SIDEBAR_CLASSES.railWidth}`}
         >
           {railInner}
         </aside>
 
         <div
-          className={`h-screen bg-white transition-[width] duration-300 ease-in-out dark:bg-gray-900 ${
+          className={`h-full bg-white transition-[width] duration-300 ease-in-out dark:bg-gray-900 ${
             showPanel
               ? `${SIDEBAR_CLASSES.panelWidth} overflow-y-auto border-r border-gray-200 dark:border-gray-800`
               : "w-0 overflow-hidden"

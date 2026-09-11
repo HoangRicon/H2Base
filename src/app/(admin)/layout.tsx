@@ -5,15 +5,17 @@ import AppSidebar from "@/components/layout/AppSidebar";
 import React from "react";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
-  // Sidebar (rail + panel phụ) nằm TRONG FLOW cùng cột nội dung:
-  // panel mở → width tăng trong flex → NỘI DUNG BỊ ĐẨY sang phải (không bị đè).
-  // Header thuộc cột nội dung nên không bao giờ che sidebar.
+  // Header tách hoàn toàn khỏi sidebar: chiếm 100% chiều rộng, nằm trên cùng.
+  // Sidebar + nội dung là hàng flex BÊN DƯỚI header, mỗi cột tự cuộn riêng —
+  // panel phụ sidebar mở ra vẫn PUSH nội dung (animate width trong flex).
   return (
-    <div className="min-h-screen md:flex">
-      <AppSidebar />
-      <div className="min-w-0 flex-1">
-        <AppHeader />
-        <div className="p-3 md:p-4">{children}</div>
+    <div className="flex h-screen flex-col">
+      <AppHeader />
+      <div className="flex flex-1 items-stretch overflow-hidden">
+        <AppSidebar />
+        <main className="min-w-0 flex-1 overflow-y-auto">
+          <div className="p-3 md:p-4">{children}</div>
+        </main>
       </div>
     </div>
   );

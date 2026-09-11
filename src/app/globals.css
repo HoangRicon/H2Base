@@ -258,6 +258,23 @@
    Mỏng, bo tròn, nền trong mờ — đậm dần khi hover; track vô hình.
    Firefox: scrollbar-width/scrollbar-color. WebKit: pseudo-elements. */
 @layer base {
+  /* Tắt hoàn toàn focus ring/outline toàn hệ thống (yêu cầu user):
+     bấm input/button không hiện thêm viền xanh. including @tailwindcss/forms defaults. */
+  *,
+  *::before,
+  *::after {
+    outline: none !important;
+    --tw-ring-shadow: 0 0 #0000 !important;
+    --tw-ring-offset-shadow: 0 0 #0000 !important;
+  }
+
+  *:focus,
+  *:focus-visible {
+    outline: none !important;
+    --tw-ring-shadow: 0 0 #0000 !important;
+    --tw-ring-offset-shadow: 0 0 #0000 !important;
+  }
+
   * {
     scrollbar-width: thin;
     scrollbar-color: rgba(120, 119, 128, 0.35) transparent;

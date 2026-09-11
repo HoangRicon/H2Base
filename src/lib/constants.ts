@@ -11,6 +11,6 @@ export const API_TIMEOUT_MS = 30_000;
  *   mở ra PUSH nội dung sang phải (animate width w-0 ↔ w-72).
  */
 export const SIDEBAR_CLASSES = {
-  railWidth: "w-20",
+  railWidth: "w-24",
   panelWidth: "w-72",
 } as const;
