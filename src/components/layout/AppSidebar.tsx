@@ -119,10 +119,10 @@ const AppSidebar: React.FC = () => {
           aria-expanded={showPanel}
           aria-label={showPanel ? "Đóng panel" : "Mở panel"}
           title={showPanel ? "Đóng panel" : "Mở panel"}
-          className={`flex h-10 w-10 cursor-pointer items-center justify-center rounded-xl transition-all duration-200 ${
+          className={`flex h-10 w-10 cursor-pointer items-center justify-center transition-all duration-200 ${
             showPanel
-              ? "bg-gray-100 text-gray-600 shadow-inner dark:bg-white/5 dark:text-gray-300"
-              : "text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/10 dark:hover:text-gray-200"
+              ? "text-brand-500 dark:text-brand-400 bg-gray-100 shadow-inner dark:bg-white/10"
+              : "hover:text-brand-500 dark:hover:text-brand-400 text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-white/10"
           }`}
         >
           <svg
