@@ -78,10 +78,6 @@ npm run build         # Next.js production build
 
 Bộ rule đầy đủ (13 rule, mapping sang ESLint/Prettier): [CLEANCODE.md](./CLEANCODE.md). AI agent đọc: [AGENTS.md](./AGENTS.md).
 
-## Workflow spec-driven (OpenSpec)
-
-Thay đổi lớn đi qua spec trước khi code: `openspec/changes/<change>/` chứa proposal → specs (requirements + scenarios Given/When/Then) → design → tasks. Validate bằng `openspec validate <change> --strict`. Đọc `AGENTS.md` để biết luồng chi tiết.
-
 ## Credits
 
 UI gốc từ [TailAdmin](https://tailadmin.com) — Tailwind admin dashboard template (MIT). H2Base refactor cấu trúc, thêm data layer + rule + luồng khởi động nhanh.

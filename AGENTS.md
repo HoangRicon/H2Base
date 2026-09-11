@@ -4,7 +4,7 @@
 
 ## Repo là gì
 
-H2Base — code base chuẩn cho **mọi webapp quản trị** (Next.js 16 App Router, React 19, TS strict, Tailwind v4). Khởi đầu từ TailAdmin đã refactor. Spec-driven: mọi thay đổi lớn đi qua `openspec/` (workflow OpenSpec).
+H2Base — code base chuẩn cho **mọi webapp quản trị** (Next.js 16 App Router, React 19, TS strict, Tailwind v4). Khởi đầu từ TailAdmin đã refactor.
 
 ## Cấu trúc — đặt file đúng chỗ ngay từ đầu
 
@@ -36,6 +36,5 @@ Thêm nghiệp vụ mới: copy `src/features/_template/`, đăng ký 1 route tr
 
 ## Luồng việc
 
-- Thay đổi lớn → tạo change trong `openspec/changes/<tên>/` (proposal → specs → design → tasks), user duyệt rồi code.
-- Task tracking: `task_plan.md`, log bằng chứng vào `progress.md`.
+- Thay đổi lớn: thống nhất yêu cầu + kế hoạch với user trước khi code (dùng workflow spec nào là quyết định của từng dự án — H2Base không bind với OpenSpec/speckit cụ thể).
 - Đọc `CLEANCODE.md` cho bản đầy đủ 13 rule cho người.
