@@ -2,54 +2,82 @@
 
 import React from "react";
 import {
-  AlertIcon,
   BoxCubeIcon,
-  BoxIcon,
-  CalenderIcon,
-  CheckCircleIcon,
-  DocsIcon,
   FileIcon,
   GridIcon,
   ListIcon,
   LockIcon,
   PageIcon,
   PieChartIcon,
-  PlugInIcon,
   TableIcon,
   UserCircleIcon,
   VideoIcon,
 } from "@/icons";
 
-export type NavItem = {
-  /** Tên trang — hiển thị dưới icon và làm chú thích (tooltip) khi hover. */
+export type SubMenuItem = { name: string; path: string; pro?: boolean; new?: boolean };
+
+export type NavSection = {
+  /** Tên nhóm — hiển thị dưới icon ở rail + làm chú thích khi hover. */
   name: string;
   icon: React.ReactNode;
-  /** Bấm icon → điều hướng thẳng tới trang này. */
+  /** Trang chính của nhóm — BẤM icon là vào thẳng trang này. */
   path: string;
+  /** Các trang con — hiển thị trong panel khi bấm nút mở rộng đáy rail. */
+  items?: SubMenuItem[];
 };
 
 /**
- * Đăng ký navigation cho webapp quản lý (danh sách phẳng).
- * Mỗi mục = 1 tile trên rail: icon + nhãn, hover có tooltip, bấm vào là sang trang luôn.
+ * Đăng ký navigation cho webapp quản lý.
+ * - Bấm tile trên rail → sang thẳng `path` của nhóm.
+ * - Nút mở rộng đáy rail → panel hiện các `items` để chọn trang chi tiết.
  * Thêm nghiệp vụ mới: thêm 1 entry + route tương ứng.
  */
-export const navItems: NavItem[] = [
-  { name: "Dashboard", icon: <GridIcon />, path: "/" },
-  { name: "Calendar", icon: <CalenderIcon />, path: "/calendar" },
-  { name: "User Profile", icon: <UserCircleIcon />, path: "/profile" },
-  { name: "Line Chart", icon: <PieChartIcon />, path: "/line-chart" },
-  { name: "Bar Chart", icon: <BoxCubeIcon />, path: "/bar-chart" },
-  { name: "Form Elements", icon: <ListIcon />, path: "/form-elements" },
-  { name: "Basic Tables", icon: <TableIcon />, path: "/basic-tables" },
-  { name: "Alerts", icon: <AlertIcon />, path: "/alerts" },
-  { name: "Avatars", icon: <BoxIcon />, path: "/avatars" },
-  { name: "Badge", icon: <DocsIcon />, path: "/badge" },
-  { name: "Buttons", icon: <CheckCircleIcon />, path: "/buttons" },
-  { name: "Images", icon: <FileIcon />, path: "/images" },
-  { name: "Videos", icon: <VideoIcon />, path: "/videos" },
-  { name: "Modals", icon: <PageIcon />, path: "/modals" },
-  { name: "Blank Page", icon: <FileIcon />, path: "/blank" },
-  { name: "404 Error", icon: <AlertIcon />, path: "/error-404" },
-  { name: "Sign In", icon: <LockIcon />, path: "/signin" },
-  { name: "Sign Up", icon: <PlugInIcon />, path: "/signup" },
+export const navSections: NavSection[] = [
+  {
+    name: "General",
+    icon: <GridIcon />,
+    path: "/",
+    items: [
+      { name: "Ecommerce", path: "/", pro: false },
+      { name: "Blank", path: "/blank", pro: false },
+      { name: "Calendar", path: "/calendar", pro: false },
+    ],
+  },
+  { name: "Users", icon: <UserCircleIcon />, path: "/profile" },
+  {
+    name: "Charts",
+    icon: <PieChartIcon />,
+    path: "/line-chart",
+    items: [
+      { name: "Line Chart", path: "/line-chart", pro: false },
+      { name: "Bar Chart", path: "/bar-chart", pro: false },
+    ],
+  },
+  {
+    name: "Ui Elements",
+    icon: <BoxCubeIcon />,
+    path: "/alerts",
+    items: [
+      { name: "Alerts", path: "/alerts", pro: false },
+      { name: "Avatars", path: "/avatars", pro: false },
+      { name: "Badge", path: "/badge", pro: false },
+      { name: "Buttons", path: "/buttons", pro: false },
+      { name: "Images", path: "/images", pro: false },
+      { name: "Modals", path: "/modals", pro: false },
+    ],
+  },
+  { name: "Forms", icon: <ListIcon />, path: "/form-elements" },
+  { name: "Tables", icon: <TableIcon />, path: "/basic-tables" },
+  { name: "Pages", icon: <PageIcon />, path: "/blank" },
+  {
+    name: "Auth",
+    icon: <LockIcon />,
+    path: "/signin",
+    items: [
+      { name: "Sign In", path: "/signin", pro: false },
+      { name: "Sign Up", path: "/signup", pro: false },
+    ],
+  },
+  { name: "Media", icon: <VideoIcon />, path: "/videos" },
+  { name: "Blank", icon: <FileIcon />, path: "/blank" },
 ];

@@ -2,7 +2,10 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 
 type SidebarContextType = {
+  /** Panel trang con (cạnh rail) đang mở — PUSH nội dung, không đè. */
+  isSubmenuOpen: boolean;
   isMobileOpen: boolean;
+  toggleSubmenuPanel: () => void;
   toggleMobileSidebar: () => void;
 };
 
@@ -17,6 +20,7 @@ export const useSidebar = () => {
 };
 
 export const SidebarProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [isSubmenuOpen, setIsSubmenuOpen] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   useEffect(() => {
@@ -29,10 +33,13 @@ export const SidebarProvider: React.FC<{ children: React.ReactNode }> = ({ child
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  const toggleSubmenuPanel = () => setIsSubmenuOpen((prev) => !prev);
   const toggleMobileSidebar = () => setIsMobileOpen((prev) => !prev);
 
   return (
-    <SidebarContext.Provider value={{ isMobileOpen, toggleMobileSidebar }}>
+    <SidebarContext.Provider
+      value={{ isSubmenuOpen, isMobileOpen, toggleSubmenuPanel, toggleMobileSidebar }}
+    >
       {children}
     </SidebarContext.Provider>
   );

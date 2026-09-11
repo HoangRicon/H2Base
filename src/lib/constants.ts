@@ -12,4 +12,5 @@ export const API_TIMEOUT_MS = 30_000;
  */
 export const SIDEBAR_CLASSES = {
   railWidth: "w-22",
+  panelWidth: "w-72",
 } as const;
