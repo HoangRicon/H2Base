@@ -101,3 +101,8 @@ Clarify: user muốn CHÍNH cái nút hamburger cạnh ô search trên header đ
 - `AppSidebar`: hết sticky/h-screen → `self-stretch` trong hàng flex; rail `w-24` (96px), tile cao 72px, nhãn `text-xs` (12px) thay 10px cho vừa rail mới.
 - Focus ring: thêm rule `@layer base` tắt `outline` + trung hòa `--tw-ring-shadow` mọi phần tử; xóa token `focus:ring-*/focus:border-*/focus:outline-*` khỏi 11 file component.
 - Verify: lint 0, build ✓, smoke 4/4 routes 200, HTML render đúng `flex h-screen flex-col` + header full-width.
+
+## 2026-09-11 (5) — Logo lên header (commit tiếp theo 8d479af)
+
+- Bỏ khối logo ở đỉnh rail `AppSidebar` (nav bắt đầu từ `pt-4`); header render full logo `logo.svg` trên MỌI breakpoint (bỏ `lg:hidden`).
+- Smoke: `logo.svg` có trong header, `logo-icon.svg` = 0 lần trong page.
