@@ -128,3 +128,10 @@ Clarify: user KHÔNG muốn phẳng hóa hết ra rail; muốn giữ rail sideba
 - `AppSidebar`: tile là `Link href=path` (click vào trang luôn); nút hamburger Đáy rail mở panel toàn cây menu (push, w-72); rail `no-scrollbar` (ẩn scrollbar vẫn cuộn được); tooltip thành 1 phần tử `fixed` đặt gốc component, tính vị trí theo `getBoundingClientRect()` mép phải tile → không bị rail/overflow/header che, z-[100].
 - `SidebarContext`: giữ `isSubmenuOpen` (panel) + `isMobileOpen`.
 - Verify: lint 0, build ✓, smoke 4/4 routes 200, render `aria-label="General"` + `w-22`.
+
+## 2026-09-11 (9) — Panel ẩn với nhóm không có trang con (commit kế tiếp e9b3136)
+
+- `showPanel = isSubmenuOpen && items.length` — section lẻ (Users/Forms/Tables/Media...) không bao giờ kéo panel ra.
+- Bấm tile nhóm lẻ khi panel đang mở → `closeSubmenuPanel()` (thêm vào context); nhóm có items → đổi section trong panel.
+- Nút đáy rail disabled khi section hiện tại không có items; màu/icon trạng thái dùng `showPanel`.
+- Verify: lint 0, build ✓, format pass.
