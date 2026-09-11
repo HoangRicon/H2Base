@@ -94,3 +94,10 @@ Clarify: user muốn CHÍNH cái nút hamburger cạnh ô search trên header đ
 - `custom-scrollbar` cũ (size-1.5 cứng) Nay kế thừa style toàn cục; `no-scrollbar` giữ nguyên cho nơi muốn ẩn hẳn.
 - Rail sidebar: bỏ `no-scrollbar` → icon nhiều hiện scrollbar mềm đúng yêu cầu.
 - Verify: build ✓, CSS compile chứa `scrollbar-color` + webkit thumb rgba trong output `.next`, lint 0.
+
+## 2026-09-11 (4) — Header tách 100%, rail to hơn, bỏ focus ring (commit 8d479af)
+
+- `app/(admin)/layout`: `h-screen flex-col` — Header full-width trên cùng (không sticky, không z-cao đè sidebar); dưới là hàng flex [sidebar | main tự cuộn]. Panel phụ vẫn push nội dung.
+- `AppSidebar`: hết sticky/h-screen → `self-stretch` trong hàng flex; rail `w-24` (96px), tile cao 72px, nhãn `text-xs` (12px) thay 10px cho vừa rail mới.
+- Focus ring: thêm rule `@layer base` tắt `outline` + trung hòa `--tw-ring-shadow` mọi phần tử; xóa token `focus:ring-*/focus:border-*/focus:outline-*` khỏi 11 file component.
+- Verify: lint 0, build ✓, smoke 4/4 routes 200, HTML render đúng `flex h-screen flex-col` + header full-width.
