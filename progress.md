@@ -119,3 +119,12 @@ Clarify: user muốn CHÍNH cái nút hamburger cạnh ô search trên header đ
 - `AppSidebar`: mọi tile là `Link` điều hướng thẳng (kể cả section nhiều con — mỗi trang con 1 tile riêng); thêm tooltip `group-hover` tên trang bên phải rail (desktop only, có mũi tên nhỏ); BỎ panel trung gian + nút đáy rail.
 - `SidebarContext` gọn còn `isMobileOpen`; `constants` bỏ `panelWidth`. Mobile drawer rộng `w-56` (có nhãn nên cần rộng hơn rail).
 - Verify: lint 0, build ✓, smoke 6/6 routes 200 + `role="tooltip"`, `aria-label="Calendar"` render đúng.
+
+## 2026-09-11 (8) — Khôi phục rail + panel, tooltip không bị che (commit e1f48c8)
+
+Clarify: user KHÔNG muốn phẳng hóa hết ra rail; muốn giữ rail sidebar 2 tầng nhưng bấm tile = vào thẳng trang chính của nhóm (không phải mở rail rồi chọn); tooltip nổi không bị che; ẩn thanh trượt rail; giữ nút mở rộng cuối sidebar.
+
+- `nav-items`: `navItems` phẳng → `navSections` với `path` bắt buộc (trang chính của nhóm) + `items` (trang con trong panel).
+- `AppSidebar`: tile là `Link href=path` (click vào trang luôn); nút hamburger Đáy rail mở panel toàn cây menu (push, w-72); rail `no-scrollbar` (ẩn scrollbar vẫn cuộn được); tooltip thành 1 phần tử `fixed` đặt gốc component, tính vị trí theo `getBoundingClientRect()` mép phải tile → không bị rail/overflow/header che, z-[100].
+- `SidebarContext`: giữ `isSubmenuOpen` (panel) + `isMobileOpen`.
+- Verify: lint 0, build ✓, smoke 4/4 routes 200, render `aria-label="General"` + `w-22`.
