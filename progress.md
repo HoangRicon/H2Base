@@ -112,3 +112,10 @@ Clarify: user muốn CHÍNH cái nút hamburger cạnh ô search trên header đ
 - `SIDEBAR_CLASSES.railWidth`: `w-24` → `w-22` (88px).
 - Nút đáy rail: bỏ toggle icon X, luôn dùng icon hamburger; mở = `text-brand-500` + `shadow-[0_0_0_4px_rgba(70,95,255,0.18)]` (không border), đóng = xám + hover nền nhạt.
 - Verify: lint 0, build ✓, `.w-22` có trong compiled CSS.
+
+## 2026-09-11 (7) — Sidebar phẳng: bấm icon → sang trang, hover → tooltip (commit 9d19c42)
+
+- `nav-items.tsx`: `navSections` (2 tầng) → `navItems` phẳng 18 mục, mỗi mục `name/icon/path`.
+- `AppSidebar`: mọi tile là `Link` điều hướng thẳng (kể cả section nhiều con — mỗi trang con 1 tile riêng); thêm tooltip `group-hover` tên trang bên phải rail (desktop only, có mũi tên nhỏ); BỎ panel trung gian + nút đáy rail.
+- `SidebarContext` gọn còn `isMobileOpen`; `constants` bỏ `panelWidth`. Mobile drawer rộng `w-56` (có nhãn nên cần rộng hơn rail).
+- Verify: lint 0, build ✓, smoke 6/6 routes 200 + `role="tooltip"`, `aria-label="Calendar"` render đúng.
