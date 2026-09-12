@@ -83,18 +83,11 @@ const AppHeader: React.FC = () => {
 
           <Link href="/" className="shrink-0">
             <Image
-              width={192}
-              height={32}
-              className="dark:hidden"
-              src="./images/logo/logo.svg"
-              alt="Hoàng Hà Digital"
-            />
-            <Image
-              width={192}
-              height={32}
-              className="hidden dark:block"
-              src="./images/logo/logo-dark.svg"
-              alt="Hoàng Hà Digital"
+              width={160}
+              height={41}
+              priority
+              src="./images/logo/logo-horizontal.webp"
+              alt="Hoàng Hà"
             />
           </Link>
 

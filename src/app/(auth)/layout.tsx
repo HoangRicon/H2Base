@@ -19,10 +19,11 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
               <div className="flex max-w-xs flex-col items-center">
                 <Link href="/" className="mb-4 block">
                   <Image
-                    width={240}
-                    height={48}
-                    src="./images/logo/auth-logo.svg"
-                    alt="Hoàng Hà Digital"
+                    width={220}
+                    height={56}
+                    priority
+                    src="./images/logo/logo-horizontal.webp"
+                    alt="Hoàng Hà"
                   />
                 </Link>
                 <p className="text-center text-gray-400 dark:text-white/60">
