@@ -86,7 +86,7 @@ const AppHeader: React.FC = () => {
               width={160}
               height={41}
               priority
-              src="./images/logo/logo-horizontal.webp"
+              src="/images/logo/logo-horizontal.webp"
               alt="Hoàng Hà"
             />
           </Link>

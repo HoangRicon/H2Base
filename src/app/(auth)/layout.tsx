@@ -22,7 +22,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
                     width={220}
                     height={56}
                     priority
-                    src="./images/logo/logo-horizontal.webp"
+                    src="/images/logo/logo-horizontal.webp"
                     alt="Hoàng Hà"
                   />
                 </Link>
