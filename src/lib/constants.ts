@@ -6,11 +6,11 @@ export const API_TIMEOUT_MS = 30_000;
 /**
  * Kích thước sidebar (rail + panel phụ). Class Tailwind đặt dạng literal tĩnh
  * để JIT scanner thấy được — không compose chuỗi động.
- * - Rail: luôn hiện trên desktop, icon + nhãn nhỏ bên dưới.
+ * - Rail: gọn kiểu icon-only (w-16), label chỉ hiện qua tooltip khi hover.
  * - Panel phụ: hiện CẠNH rail khi bấm section có menu con — nằm trong flex,
- *   mở ra PUSH nội dung sang phải (animate width w-0 ↔ w-72).
+ *   mở ra PUSH nội dung sang phải (animate width w-0 ↔ w-60).
  */
 export const SIDEBAR_CLASSES = {
-  railWidth: "w-22",
-  panelWidth: "w-72",
+  railWidth: "w-16",
+  panelWidth: "w-60",
 } as const;

@@ -22,8 +22,8 @@ export default function UserDropdown() {
         onClick={toggleDropdown}
         className="dropdown-toggle flex items-center text-gray-700 dark:text-gray-400"
       >
-        <span className="mr-3 h-11 w-11 overflow-hidden rounded-full">
-          <Image width={44} height={44} src="/images/user/owner.jpg" alt="User" />
+        <span className="mr-2 h-8 w-8 overflow-hidden rounded-full">
+          <Image width={32} height={32} src="/images/user/owner.jpg" alt="User" />
         </span>
 
         <span className="text-theme-sm mr-1 block font-medium">Musharof</span>

@@ -36,5 +36,5 @@ Thêm nghiệp vụ mới: copy `src/features/_template/`, đăng ký 1 route tr
 
 ## Luồng việc
 
-- Thay đổi lớn: thống nhất yêu cầu + kế hoạch với user trước khi code (dùng workflow spec nào là quyết định của từng dự án — H2Base không bind với OpenSpec/speckit cụ thể).
+- Thay đổi lớn: thống nhất yêu cầu + kế hoạch với user trước khi code. Dùng bộ skill của Matt Pocock (`brainstorming` → `writing-plans` → `implement` → `code-review`/`tdd`). Không dùng workflow spec-first.
 - Đọc `CLEANCODE.md` cho bản đầy đủ 13 rule cho người.

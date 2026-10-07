@@ -41,9 +41,9 @@ const AppHeader: React.FC = () => {
   return (
     <header className="z-30 flex w-full shrink-0 border-gray-200 bg-white lg:border-b dark:border-gray-800 dark:bg-gray-900">
       <div className="flex grow flex-col items-center justify-between lg:flex-row lg:px-6">
-        <div className="flex w-full items-center justify-between gap-2 border-b border-gray-200 px-3 py-3 sm:gap-4 lg:justify-normal lg:border-b-0 lg:px-0 lg:py-4 dark:border-gray-800">
+        <div className="flex w-full items-center justify-between gap-2 border-b border-gray-200 px-3 py-2 sm:gap-3 lg:justify-normal lg:border-b-0 lg:px-0 lg:py-2 dark:border-gray-800">
           <button
-            className="z-99999 flex h-10 w-10 items-center justify-center rounded-lg border-gray-200 text-gray-500 md:hidden dark:border-gray-800 dark:text-gray-400"
+            className="z-99999 flex h-9 w-9 items-center justify-center rounded-lg border-gray-200 text-gray-500 md:hidden dark:border-gray-800 dark:text-gray-400"
             onClick={handleToggle}
             aria-label="Toggle Sidebar"
           >
@@ -83,8 +83,8 @@ const AppHeader: React.FC = () => {
 
           <Link href="/" className="shrink-0">
             <Image
-              width={160}
-              height={41}
+              width={132}
+              height={34}
               priority
               src="/images/logo/logo-horizontal.webp"
               alt="Hoàng Hà"
@@ -93,7 +93,7 @@ const AppHeader: React.FC = () => {
 
           <button
             onClick={toggleApplicationMenu}
-            className="z-99999 flex h-10 w-10 items-center justify-center rounded-lg text-gray-700 hover:bg-gray-100 lg:hidden dark:text-gray-400 dark:hover:bg-gray-800"
+            className="z-99999 flex h-9 w-9 items-center justify-center rounded-lg text-gray-700 hover:bg-gray-100 lg:hidden dark:text-gray-400 dark:hover:bg-gray-800"
           >
             <svg
               width="24"
@@ -114,11 +114,11 @@ const AppHeader: React.FC = () => {
           <div className="hidden lg:block">
             <form>
               <div className="relative">
-                <span className="pointer-events-none absolute top-1/2 left-4 -translate-y-1/2">
+                <span className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2">
                   <svg
                     className="fill-gray-500 dark:fill-gray-400"
-                    width="20"
-                    height="20"
+                    width="18"
+                    height="18"
                     viewBox="0 0 20 20"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -135,10 +135,10 @@ const AppHeader: React.FC = () => {
                   ref={inputRef}
                   type="text"
                   placeholder="Search or type command..."
-                  className="dark:bg-dark-900 shadow-theme-xs h-11 w-full rounded-lg border border-gray-200 bg-transparent py-2.5 pr-14 pl-12 text-sm text-gray-800 placeholder:text-gray-400 xl:w-[430px] dark:border-gray-800 dark:bg-gray-900 dark:bg-white/[0.03] dark:text-white/90 dark:placeholder:text-white/30"
+                  className="dark:bg-dark-900 shadow-theme-xs h-9 w-full rounded-lg border border-gray-200 bg-transparent py-1 pr-12 pl-10 text-sm text-gray-800 placeholder:text-gray-400 xl:w-[360px] dark:border-gray-800 dark:bg-gray-900 dark:bg-white/[0.03] dark:text-white/90 dark:placeholder:text-white/30"
                 />
 
-                <button className="absolute top-1/2 right-2.5 inline-flex -translate-y-1/2 items-center gap-0.5 rounded-lg border border-gray-200 bg-gray-50 px-[7px] py-[4.5px] text-xs -tracking-[0.2px] text-gray-500 dark:border-gray-800 dark:bg-white/[0.03] dark:text-gray-400">
+                <button className="absolute top-1/2 right-2.5 inline-flex -translate-y-1/2 items-center gap-0.5 rounded-md border border-gray-200 bg-gray-50 px-1.5 py-0.5 text-xs -tracking-[0.2px] text-gray-500 dark:border-gray-800 dark:bg-white/[0.03] dark:text-gray-400">
                   <span> ⌘ </span>
                   <span> K </span>
                 </button>
@@ -149,9 +149,9 @@ const AppHeader: React.FC = () => {
         <div
           className={`${
             isApplicationMenuOpen ? "flex" : "hidden"
-          } shadow-theme-md w-full items-center justify-between gap-4 px-5 py-4 lg:flex lg:justify-end lg:px-0 lg:shadow-none`}
+          } shadow-theme-md w-full items-center justify-between gap-4 px-4 py-2 lg:flex lg:justify-end lg:px-0 lg:shadow-none`}
         >
-          <div className="2xsm:gap-3 flex items-center gap-2">
+          <div className="2xsm:gap-2 flex items-center gap-2">
             {/* <!-- Dark Mode Toggler --> */}
             <ThemeToggleButton />
             {/* <!-- Dark Mode Toggler --> */}

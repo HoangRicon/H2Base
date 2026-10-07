@@ -10,9 +10,9 @@ import { navSections, type NavSection } from "@/components/layout/nav-items";
 type TooltipState = { name: string; x: number; y: number } | null;
 
 /**
- * Rail sidebar + panel mở rộng:
- * - Rail (w-22): mỗi nhóm là 1 tile icon + nhãn; BẤM TILE → VÀO THẲNG trang chính của nhóm.
- * - Hover tile → tooltip chú thích NỔI LÊN ngoài mép rail (không bị che).
+ * Rail sidebar gọn kiểu icon-only (như deplao-crm: w-16, nút 40px):
+ * - Rail (w-16): mỗi nhóm là 1 nút icon vuông w-10 h-10; BẤM → VÀO THẲNG trang chính.
+ * - Hover nút → tooltip chú thích NỔI LÊN ngoài mép rail (không bị che).
  * - Rail KHÔNG hiện thanh trượt (ẩn scrollbar, vẫn cuộn được).
  * - Nút mở rộng ở CUỐI rail (ghim đáy, không cuộn theo icon) → panel trang con
  *   hiện cạnh rail, PUSH nội dung (không đè).
@@ -54,15 +54,17 @@ const AppSidebar: React.FC = () => {
   };
 
   const tileClass = (active: boolean) =>
-    `flex h-[72px] w-full cursor-pointer flex-col items-center justify-center gap-1.5 rounded-lg px-1 transition-colors ${
-      active ? "bg-brand-50 dark:bg-brand-500/[0.12]" : "hover:bg-gray-100 dark:hover:bg-white/5"
+    `flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg transition-colors ${
+      active
+        ? "bg-brand-500 text-white shadow-sm"
+        : "text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/10 dark:hover:text-white"
     }`;
 
   const railInner = (
     <>
       {/* no-scrollbar: ẩn thanh trượt khi nhiều icon, vẫn cuộn bằng wheel/trackpad */}
-      <nav className="no-scrollbar flex-1 overflow-x-clip overflow-y-auto px-2 pt-4 pb-3">
-        <ul className="flex flex-col gap-1">
+      <nav className="no-scrollbar flex-1 overflow-x-clip overflow-y-auto px-2 pt-3 pb-3">
+        <ul className="flex flex-col items-center gap-1">
           {navSections.map((section, index) => {
             const active = isSectionActive(section);
             return (
@@ -70,6 +72,7 @@ const AppSidebar: React.FC = () => {
                 <Link
                   href={section.path}
                   aria-label={section.name}
+                  title={section.name}
                   onClick={() => {
                     // Bấm icon: vào thẳng trang chính.
                     // Nhóm CÓ trang con → panel railsidebar TỰ MỞ và đổi sang nhóm đó.
@@ -85,24 +88,7 @@ const AppSidebar: React.FC = () => {
                   onBlur={() => setTooltip(null)}
                   className={tileClass(active)}
                 >
-                  <span
-                    className={
-                      active
-                        ? "text-brand-500 dark:text-brand-400"
-                        : "text-gray-700 dark:text-gray-200"
-                    }
-                  >
-                    {section.icon}
-                  </span>
-                  <span
-                    className={`text-center text-xs leading-tight ${
-                      active
-                        ? "text-brand-500 dark:text-brand-400 font-semibold"
-                        : "font-medium text-gray-700 dark:text-gray-200"
-                    }`}
-                  >
-                    {section.name}
-                  </span>
+                  {section.icon}
                 </Link>
               </li>
             );
@@ -119,7 +105,7 @@ const AppSidebar: React.FC = () => {
           aria-expanded={showPanel}
           aria-label={showPanel ? "Đóng panel" : "Mở panel"}
           title={showPanel ? "Đóng panel" : "Mở panel"}
-          className={`flex h-10 w-10 cursor-pointer items-center justify-center transition-all duration-200 ${
+          className={`flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg transition-all duration-200 ${
             showPanel
               ? "text-brand-500 dark:text-brand-400 bg-gray-100 shadow-inner dark:bg-white/10"
               : "hover:text-brand-500 dark:hover:text-brand-400 text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-white/10"
