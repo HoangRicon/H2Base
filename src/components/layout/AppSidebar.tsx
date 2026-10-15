@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSidebar } from "@/context/SidebarContext";
-import { SIDEBAR_CLASSES } from "@/lib/constants";
+import { SIDEBAR_CLASSES, SIDEBAR_PANEL } from "@/lib/constants";
 import { navSections, type NavSection } from "@/components/layout/nav-items";
 
 type TooltipState = { name: string; x: number; y: number } | null;
@@ -47,6 +47,68 @@ const AppSidebar: React.FC = () => {
 
   // Tooltip FIXED duy nhất (không nằm trong nav có overflow → không bị che).
   const [tooltip, setTooltip] = useState<TooltipState>(null);
+
+  // Panel submenu KÉO được mép phải để đổi rộng (thay vì fix cứng).
+  // Ẩn scroll ngang (overflow-x-clip), chỉ cuộn dọc.
+  const [panelWidth, setPanelWidth] = useState<number>(SIDEBAR_PANEL.defaultWidth);
+  const [resizing, setResizing] = useState(false);
+  const resizeRef = useRef<{ startX: number; startW: number } | null>(null);
+
+  useEffect(() => {
+    try {
+      const stored = Number(localStorage.getItem(SIDEBAR_PANEL.storageKey));
+      if (stored >= SIDEBAR_PANEL.minWidth && stored <= SIDEBAR_PANEL.maxWidth) {
+        setPanelWidth(stored);
+      }
+    } catch {
+      /* localStorage không dùng được — bỏ qua */
+    }
+  }, []);
+
+  // Khi đang kéo: theo pointer toàn window, nhả chuột thì dừng + lưu.
+  useEffect(() => {
+    if (!resizing) return;
+    document.body.style.cursor = "col-resize";
+    document.body.style.userSelect = "none";
+    const handleMove = (e: PointerEvent) => {
+      const start = resizeRef.current;
+      if (!start) return;
+      const next = Math.round(start.startW + (e.clientX - start.startX));
+      const clamped = Math.min(SIDEBAR_PANEL.maxWidth, Math.max(SIDEBAR_PANEL.minWidth, next));
+      start.startW = clamped;
+      start.startX = e.clientX;
+      setPanelWidth(clamped);
+    };
+    const handleUp = () => {
+      const finalW = resizeRef.current?.startW ?? panelWidth;
+      setResizing(false);
+      resizeRef.current = null;
+      try {
+        localStorage.setItem(SIDEBAR_PANEL.storageKey, String(finalW));
+      } catch {
+        /* bỏ qua */
+      }
+      document.body.style.cursor = "";
+      document.body.style.userSelect = "";
+    };
+    window.addEventListener("pointermove", handleMove);
+    window.addEventListener("pointerup", handleUp);
+    return () => {
+      window.removeEventListener("pointermove", handleMove);
+      window.removeEventListener("pointerup", handleUp);
+      document.body.style.cursor = "";
+      document.body.style.userSelect = "";
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resizing]);
+
+  const startResize = (e: React.PointerEvent) => {
+    e.preventDefault();
+    resizeRef.current = { startX: e.clientX, startW: panelWidth };
+    setResizing(true);
+  };
+
+  const resetPanelWidth = () => setPanelWidth(SIDEBAR_PANEL.defaultWidth);
 
   const showTooltip = (e: React.MouseEvent | React.FocusEvent, name: string) => {
     const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
@@ -153,16 +215,20 @@ const AppSidebar: React.FC = () => {
         </aside>
 
         {/* Panel: CHỈ hiện các trang con của section đang chọn trên rail
-            (vd bấm Báo cáo → chỉ nhóm báo cáo, không lai các nhóm khác) */}
+            (vd bấm Báo cáo → chỉ nhóm báo cáo, không lai các nhóm khác).
+            Ẩn scroll ngang + KÉO mép phải để đổi rộng (lưu localStorage). */}
         <div
-          className={`h-full bg-white transition-[width] duration-300 ease-in-out dark:bg-gray-900 ${
+          className={`relative h-full bg-white dark:bg-gray-900 ${
+            resizing ? "select-none" : "transition-[width] duration-300 ease-in-out"
+          } ${
             showPanel
-              ? `${SIDEBAR_CLASSES.panelWidth} overflow-y-auto border-r border-gray-200 dark:border-gray-800`
-              : "w-0 overflow-hidden"
+              ? "overflow-x-clip overflow-y-auto border-r border-gray-200 dark:border-gray-800"
+              : "overflow-hidden"
           }`}
+          style={{ width: showPanel ? panelWidth : 0 }}
         >
-          <div className={`px-3 py-4 ${SIDEBAR_CLASSES.panelWidth}`}>
-            <h2 className="mb-2 px-2 text-sm font-semibold tracking-wide text-gray-700 dark:text-gray-300">
+          <div className="px-3 py-4" style={{ width: panelWidth }}>
+            <h2 className="mb-2 truncate px-2 text-sm font-semibold tracking-wide text-gray-700 dark:text-gray-300">
               {panelSection?.name}
             </h2>
             <ul className="flex flex-col gap-0.5">
@@ -204,6 +270,21 @@ const AppSidebar: React.FC = () => {
               })}
             </ul>
           </div>
+
+          {/* Tay kéo mép phải panel — double-click để về rộng mặc định */}
+          {showPanel && (
+            <span
+              role="separator"
+              aria-orientation="vertical"
+              aria-label="Kéo để đổi rộng panel"
+              title="Kéo để đổi rộng • Double-click để reset"
+              onPointerDown={startResize}
+              onDoubleClick={resetPanelWidth}
+              className={`hover:bg-brand-500/60 absolute top-0 right-0 z-10 h-full w-1 cursor-col-resize touch-none bg-transparent transition-colors ${
+                resizing ? "bg-brand-500/60" : ""
+              }`}
+            />
+          )}
         </div>
       </div>
 
